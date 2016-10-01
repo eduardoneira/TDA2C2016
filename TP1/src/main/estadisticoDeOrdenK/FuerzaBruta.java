@@ -6,28 +6,26 @@ public class FuerzaBruta implements BuscadorEstadisticoDeOrdenK {
 	@Override
 	public Integer buscarEstadisticoDeOrdenK(Integer[] conjunto, int k) {
 		for (int i = 0; i < conjunto.length; i++){
-			if (esElEstadisticoDeOrdenK(conjunto, k, i)){
-				return conjunto[i];
+			int candidato = conjunto[i];
+			if (esElEstadisticoDeOrdenK(conjunto, k, candidato)){
+				return candidato;
 			}
 		}
 		return null;
 	}
 	
-	private boolean esElEstadisticoDeOrdenK(Integer[] conjunto, int k, int candidatoIdx){
+	private boolean esElEstadisticoDeOrdenK(Integer[] conjunto, int k, int candidato){
 		int cantidadDeMenores = 0;
 		int cantidadDeIguales = 0;
 		
 		for (int i = 0; i < conjunto.length; i++){
-			if (i != candidatoIdx){
-				Integer candidato = conjunto[candidatoIdx];
-				if (conjunto[i] < candidato){
-					cantidadDeMenores++;
-				} else if (conjunto[i].equals(candidato)){
-					cantidadDeIguales++;
-				}
+			if (conjunto[i] < candidato){
+				cantidadDeMenores++;
+			} else if (conjunto[i].equals(candidato)){
+				cantidadDeIguales++;
 			}
 		}
-		return ((cantidadDeMenores <= k) && (k <= cantidadDeMenores + cantidadDeIguales));
+		return ((cantidadDeMenores <= k) && (k < cantidadDeMenores + cantidadDeIguales));
 	}
 
 }
