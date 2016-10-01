@@ -16,8 +16,8 @@ import org.junit.Test;
 //TODO Podriamos generalizar los tests para todos los algoritmos.
 public class FuerzaBrutaTest {
 	
-	private static final int N = 1000;
-	private static final int MAXINT = 10000;
+	private static final int N = 100;
+	private static final int MAXINT = 1000;
 	
 	private BuscadorEstadisticoDeOrdenK fuerzaBruta;
 	
@@ -54,7 +54,7 @@ public class FuerzaBrutaTest {
 		return map;
 	}
 	
-//	@Test
+	@Test
 	//TODO Actualizar este test.
 	public void test() {
 		Integer[] conjunto = this.setUpConjunto();
