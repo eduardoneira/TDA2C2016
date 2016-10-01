@@ -54,7 +54,7 @@ public class FuerzaBrutaTest {
 		return map;
 	}
 	
-	@Test
+//	@Test
 	//TODO Actualizar este test.
 	public void test() {
 		Integer[] conjunto = this.setUpConjunto();
@@ -110,6 +110,23 @@ public class FuerzaBrutaTest {
 		conjunto[2] = 2;
 		int k = 1;
 		assertEquals(fuerzaBruta.buscarEstadisticoDeOrdenK(conjunto, k), new Integer(3));
+	}
+	
+	@Test
+	public void buscarEstadisticoDeOrdenKConDuplicados(){
+		Integer[] conjunto = new Integer[4];
+		conjunto[0] = 3;
+		conjunto[1] = 5;
+		conjunto[2] = 2;
+		conjunto[3] = 3;
+		int k = 1;
+		assertEquals(fuerzaBruta.buscarEstadisticoDeOrdenK(conjunto, k), new Integer(3));
+		k = 2;
+		assertEquals(fuerzaBruta.buscarEstadisticoDeOrdenK(conjunto, k), new Integer(3));
+		k = 0;
+		assertEquals(fuerzaBruta.buscarEstadisticoDeOrdenK(conjunto, k), new Integer(2));
+		k = 3;
+		assertEquals(fuerzaBruta.buscarEstadisticoDeOrdenK(conjunto, k), new Integer(5));
 	}
 	
 	@Test
