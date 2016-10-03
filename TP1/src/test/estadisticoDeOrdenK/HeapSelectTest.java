@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 //TODO Podriamos generalizar los tests para todos los algoritmos.
-public class FuerzaBrutaTest {
+public class HeapSelectTest {
 	
 	private static final int N = 100;
 	private static final int MAXINT = 1000;
@@ -23,7 +23,7 @@ public class FuerzaBrutaTest {
 	
 	@Before
 	public void setup(){
-		buscador = new FuerzaBruta();
+		buscador = new HeapSelect();
 	}
 	
 	private Integer[] setUpConjunto(){
@@ -54,7 +54,7 @@ public class FuerzaBrutaTest {
 		return map;
 	}
 	
-//	@Test
+	@Test
 	public void test() {
 		Integer[] conjunto = this.setUpConjunto();
 		//Mapa para los posibles valores de k por numero del conjunto
