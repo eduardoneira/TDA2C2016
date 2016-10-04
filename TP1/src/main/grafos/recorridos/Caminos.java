@@ -7,22 +7,21 @@ import grafos.Digrafo;
 
 public abstract class Caminos {
 
-    private int src;
+    private Integer src;
 
-    protected Caminos(Digrafo g, int origin) {
+    protected Caminos(Digrafo g, Integer origin) {
         src = origin;
+        calcularDistancias();
     }
 
-    public abstract double distancia(int v);
+    protected abstract void calcularDistancias();
 
-    protected abstract Arista aristaHaciaVertice(int v);
+    public abstract double distancia(Integer v);
 
+    public abstract List<Arista> camino(Integer v);
+    
     public boolean visitado(int v) {
         return distancia(v) < Double.POSITIVE_INFINITY;
     }
 
-    public List<Arista> camino(int v) {
-    	//TODO
-    	return null;
-    }
 }

@@ -68,6 +68,18 @@ public class Digrafo implements Iterable<Integer>{
 		return v.iterator();
 	}
 	
+	/**
+	 * 
+	 * @return conjunto de vertices del grafo.
+	 */
+	public Set<Integer> v(){
+		return v;
+	}
+	
+	/**
+	 * 
+	 * @return conjunto de aristas del grafo.
+	 */
 	public Set<Arista> e(){
 		return e;
 	}
