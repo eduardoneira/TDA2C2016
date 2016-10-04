@@ -18,7 +18,7 @@ public abstract class BuscadorEstadisticoDeOrdenKTest {
 
 	private BuscadorEstadisticoDeOrdenK buscador;
 
-	private static final int N = 100;
+	private static final int N = 1000;
 	private static final int MAXINT = 1000;
 	
 	@Before
@@ -29,50 +29,64 @@ public abstract class BuscadorEstadisticoDeOrdenKTest {
 	protected abstract BuscadorEstadisticoDeOrdenK buscador();
 	
 
-	private Integer[] setUpConjunto(){
+	protected Integer[] setUpConjunto(int n){
 		Random random = new Random();
-		Integer[] conjunto = new Integer[N];
-		for (int i = 0; i < N ; i++){
+		Integer[] conjunto = new Integer[n];
+		for (int i = 0; i < n ; i++){
 			conjunto[i] = random.nextInt(MAXINT);
 		}
 		return conjunto;
 	}
 	
-	private Map<Integer,List<Integer>> getKPosibles(Integer[] conjunto){
-		Arrays.sort(conjunto);
-		Map<Integer,List<Integer>> map = new HashMap<Integer,List<Integer>>();
-		for (int i = 0; i < conjunto.length; i++){
-			Integer actual = conjunto[i];
-			List<Integer> listActual;
-			
-			if (map.containsKey(actual)){
-				listActual = map.get(actual);
-			}else {
-				listActual = new ArrayList<Integer>();
-			}
-			
-			listActual.add(i);
-			map.put(actual,listActual);
-		}
-		return map;
-	}
-	
 	@Test
-	public void test() {
-		Integer[] conjunto = this.setUpConjunto();
-		//Mapa para los posibles valores de k por numero del conjunto
-		Map<Integer,List<Integer>> kPosibles = getKPosibles(conjunto.clone());
-		BuscadorEstadisticoDeOrdenK fuerzaBruta = new FuerzaBruta();
+	public void testRandom() {
+		Integer[] conjunto = this.setUpConjunto(N);
+		//Uso el ordenamiento comun para tener todos los k
+		Integer[] conjuntoOrdenado = conjunto.clone();
+		Arrays.sort(conjuntoOrdenado);
+
 		for(int k = 0; k < conjunto.length; k++){
-			for (int c = 0; c < conjunto.length; c++){
-				if (kPosibles.get(conjunto[c]).contains(k)){
-					assertEquals(fuerzaBruta.buscarEstadisticoDeOrdenK(conjunto, k), conjunto[c]);
-				}else {
-					assertNotEquals(fuerzaBruta.buscarEstadisticoDeOrdenK(conjunto, k), conjunto[c]);
-				}
-			}
+			assertEquals(buscador.buscarEstadisticoDeOrdenK(conjunto, k), conjuntoOrdenado[k]);
 		}
+		
 	}
+
+//TODO: Algun dia actulizar tal vez, la verdad fiaca porque en si solo sirve para el de Fuerza bruta pero bue lo dejo
+//	private Map<Integer,List<Integer>> getKPosibles(Integer[] conjunto){
+//		Arrays.sort(conjunto);
+//		Map<Integer,List<Integer>> map = new HashMap<Integer,List<Integer>>();
+//		for (int i = 0; i < conjunto.length; i++){
+//			Integer actual = conjunto[i];
+//			List<Integer> listActual;
+//			
+//			if (map.containsKey(actual)){
+//				listActual = map.get(actual);
+//			}else {
+//				listActual = new ArrayList<Integer>();
+//			}
+//			
+//			listActual.add(i);
+//			map.put(actual,listActual);
+//		}
+//		return map;
+//	}
+//	
+//	@Test
+//	public void testDeprecado() {
+//		Integer[] conjunto = this.setUpConjunto();
+//		//Mapa para los posibles valores de k por numero del conjunto
+//		Map<Integer,List<Integer>> kPosibles = getKPosibles(conjunto.clone());
+//		BuscadorEstadisticoDeOrdenK fuerzaBruta = new FuerzaBruta();
+//		for(int k = 0; k < conjunto.length; k++){
+//			for (int c = 0; c < conjunto.length; c++){
+//				if (kPosibles.get(conjunto[c]).contains(k)){
+//					assertEquals(fuerzaBruta.buscarEstadisticoDeOrdenK(conjunto, k), conjunto[c]);
+//				}else {
+//					assertNotEquals(fuerzaBruta.buscarEstadisticoDeOrdenK(conjunto, k), conjunto[c]);
+//				}
+//			}
+//		}
+//	}
 	
 	@Test
 	public void buscarEnArrayVacioDevuelveNull(){
