@@ -18,78 +18,45 @@ public class QuickSelect implements BuscadorEstadisticoDeOrdenK {
 		return quickSelect(conjunto, 0, conjunto.length - 1, k);
 	}
 	
-	private void swap(Integer[] A, int i, int j) {
-		Integer aux = A[i];
-		A[i] = A[j];
-		A[j] = aux;
+	private void swap(Integer[] array, int i, int j) {
+		Integer aux = array[i];
+		array[i] = array[j];
+		array[j] = aux;
 	}
 	
-	private int partition(Integer[] A, int p, int r){
-		Integer pivot = A[r];
-		int i = p - 1;
-		for (int j = p; j < r; j++){
-			if (A[j] <= pivot){
+	private int partition(Integer[] array, int start, int end){
+		Integer pivot = array[end];
+		int i = start - 1;
+		for (int j = start; j < end; j++){
+			if (array[j] <= pivot){
 				i++;
-				swap(A,i,j);
+				swap(array,i,j);
 			}
 		}
-		swap(A, i + 1, r);
+		swap(array, i + 1, end);
 		return i + 1;
 	}
 	
-	private int randomizedPartition(Integer[] A, int p, int r) {
-		int i = random.nextInt(r - p + 1) + p;
-		swap(A, r, i);
-		return partition(A, p, r);
+	private int randomizedPartition(Integer[] array, int start, int end) {
+		int pivotIdx = random.nextInt(end - start + 1) + start;
+		swap(array, end, pivotIdx);
+		return partition(array, start, end);
 	}
 	
-	private Integer quickSelect(Integer[] A, int p, int r, int i){
-		if (p == r){
-			return A[p];
+	private Integer quickSelect(Integer[] array, int start, int end, int k){
+		if (start >= end){
+			return array[start];
 		}
-		int q = randomizedPartition(A, p, r);
-		int k = q - p + 1;
-		if (i == k){
+		int pivotIdx = randomizedPartition(array, start, end);
+		if (k == pivotIdx){
 			// the pivot value is the answer
-			return A[q];
-		} else if (i < k){
-			return quickSelect(A, p, q - 1, i);
+			return array[pivotIdx];
+		} else if (k < pivotIdx){
+			return quickSelect(array, start, pivotIdx - 1, k);
 		} else {
-			return quickSelect(A, q + 1, r, i - k);
+			return quickSelect(array, pivotIdx + 1, end, k);
 		}
 	}
 	
-
-
-
-	
-/*
- * PARTITION (A,p,r)
- * 		x = A[r]
- * 		i = p - 1
- * 		for j = p to r - 1
- * 			if A[j] <= x
- * 				i++
- * 				swap(A,i,j)
- * 		swap(A, i+1, r)
- * 		return i+1
- * 
- * RANDOMIZED-PARTITION (A,p,r)
- * 		i = RANDOM(p,r)
- * 		swap(A, r, i)
- * 		return PARTITION (A,p,r)
- * 
- * RANDOMIZED-SELECT (A,p,r,i)
- * 		if p == r
- * 			return A[p]
- * 		q = RANDOMIZED-PARTITION (A, p, r)
- * 		k = q - p + 1
- * 		if i == k // the pivot value is the answer
- * 			return A[q]
- * 		elseif i < k
- * 			return RANDOMIZED-SELECT (A,p,q-1,i)
- * 		else 
- * 			return RANDOMIZED-SELECT (A,q+1,r,i-k)
- */
 	
 }
