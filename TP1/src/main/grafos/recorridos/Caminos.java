@@ -11,6 +11,7 @@ public abstract class Caminos {
 	
     protected Integer src;
     protected Integer dest;
+    protected Digrafo g;
 
     protected double dist[];
     protected Arista edge[];
@@ -18,6 +19,7 @@ public abstract class Caminos {
     public Caminos(Digrafo g, Integer origen, Integer destino) {
         src = origen;
         dest = destino;
+        this.g = g;
         
         dist = new double[g.n()];
         edge = new Arista[g.n()];
