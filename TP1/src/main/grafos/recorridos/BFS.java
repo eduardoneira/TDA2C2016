@@ -60,14 +60,19 @@ public class BFS extends Caminos {
 
 	@Override
 	public List<Arista> camino(Integer v) {
+		// Si no existe el camino devuelvo null
+		if (dist[v] == Double.POSITIVE_INFINITY) {
+			return null;
+		}
+		
 		List<Arista> camino = new ArrayList<Arista>();
 		
 		Integer nodoActual = v;
-		
+				
 		while (nodoActual != this.src){
 			Arista aristaAcutal = this.aristaHaciaVertice(nodoActual);
 			camino.add(0, aristaAcutal);
-			nodoActual= aristaAcutal.getSrc();
+			nodoActual = aristaAcutal.getSrc();
 		}
 		
 		return camino;
