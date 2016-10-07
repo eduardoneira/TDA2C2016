@@ -14,12 +14,11 @@ public abstract class Caminos {
         src = origin;
         diGraph = g;
         init();
-        calcularDistancias();
     }
     
     protected abstract void init();
 
-    protected abstract void calcularDistancias();
+    public abstract void calcularDistancias();
 
     public abstract double distancia(Integer v);
 

@@ -23,15 +23,9 @@ public class BFS extends Caminos {
     }
 
 	@Override
-	protected void calcularDistancias() {
+	public void calcularDistancias() {
 		
-		for (int i = 0; i < this.diGraph.n(); i++){
-			if (i != this.src){
-				this.dist[i] = Double.POSITIVE_INFINITY;
-			}
-		}
-		
-		dist[this.src] = 0;
+		this.initDist();
 		
 		Queue<Integer> queue = new LinkedList<>();
 		
@@ -48,8 +42,18 @@ public class BFS extends Caminos {
 				}
 			}
 		}
+			
+	}
+	
+	protected void initDist(){
 		
+		for (int i = 0; i < this.diGraph.n(); i++){
+			if (i != this.src){
+				this.dist[i] = Double.POSITIVE_INFINITY;
+			}
+		}
 		
+		dist[this.src] = 0;
 	}
 
 	@Override

@@ -8,4 +8,6 @@ import grafos.Punto;
  */
 public interface Heuristic {
 	Double heuristic(Punto p);
+	
+	Double distance(Punto a, Punto b);
 }

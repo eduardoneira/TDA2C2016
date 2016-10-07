@@ -9,12 +9,12 @@ public class ManhattanDistance extends HeuristicAlgortithm{
 	}
 
 	@Override
-	public Double heuristic(Punto p) {
+	public Double distance(Punto a, Punto b) {
 		if (this.destination == null) 
 			return (double) 0;
 		
-		Integer deltaX = this.destination.getX() - p.getX();
-		Integer deltaY = this.destination.getY() - p.getY();
+		Integer deltaX = b.getX() - a.getX();
+		Integer deltaY = b.getY() - a.getY();
 		return (double) (Math.abs(deltaX) + Math.abs(deltaY));
 	}
 

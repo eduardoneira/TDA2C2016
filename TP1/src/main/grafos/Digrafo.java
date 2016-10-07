@@ -95,4 +95,8 @@ public class Digrafo implements Iterable<Integer>{
 		return e;
 	}
 	
+	public VerticeGrilla getVerticeGrilla(Integer v){
+		return null;
+	}
+	
 }

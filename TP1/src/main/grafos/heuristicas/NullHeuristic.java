@@ -9,7 +9,7 @@ public class NullHeuristic extends HeuristicAlgortithm {
 	}
 
 	@Override
-	public Double heuristic(Punto p) {
+	public Double distance(Punto a, Punto b) {
 		return (double) 0;
 	}
 
