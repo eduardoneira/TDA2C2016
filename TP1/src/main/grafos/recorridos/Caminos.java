@@ -25,6 +25,7 @@ public abstract class Caminos {
         for (int i = 0; i < dist.length; i++){
         	dist[i] = INFINITY;
         }
+        dist[origen] = 0;
         
         calcularDistancias();
     }
