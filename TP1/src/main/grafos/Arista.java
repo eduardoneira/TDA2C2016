@@ -2,21 +2,21 @@ package grafos;
 
 public class Arista {
 
-	private int src;
-	private int dst;
+	private Integer src;
+	private Integer dst;
 	private int weight;
 
-	public Arista(int src, int dst, int weight) {
+	public Arista(Integer src, Integer dst, int weight) {
 		this.src = src;
 		this.dst = dst;
 		this.weight = weight;
 	}
 
-	public int getSrc() {
+	public Integer getSrc() {
 		return src;
 	}
 
-	public int getDst() {
+	public Integer getDst() {
 		return dst;
 	}
 

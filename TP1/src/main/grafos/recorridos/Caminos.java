@@ -7,21 +7,45 @@ import grafos.Digrafo;
 
 public abstract class Caminos {
 
-    private Integer src;
+	private static final double INFINITY = Double.POSITIVE_INFINITY;
+	
+    protected Integer src;
+    protected Integer dest;
 
-    protected Caminos(Digrafo g, Integer origin) {
-        src = origin;
+    protected double dist[];
+    protected Arista edge[];
+    
+    public Caminos(Digrafo g, Integer origen, Integer destino) {
+        src = origen;
+        dest = destino;
+        
+        dist = new double[g.n()];
+        edge = new Arista[g.n()];
+        
+        for (int i = 0; i < dist.length; i++){
+        	dist[i] = INFINITY;
+        }
+        
         calcularDistancias();
     }
 
     protected abstract void calcularDistancias();
 
-    public abstract double distancia(Integer v);
+    public double distancia(Integer v){
+    	return dist[v];
+    }
 
-    public abstract List<Arista> camino(Integer v);
+    public Arista aristaHaciaVertice(Integer v) { 
+    	return edge[v]; 
+    }
+    
+    public List<Arista> camino(Integer v){
+    	//TODO Devolver el camino a v por edge[]
+    	return null;
+    }
     
     public boolean visitado(int v) {
-        return distancia(v) < Double.POSITIVE_INFINITY;
+        return distancia(v) < INFINITY;
     }
 
 }
