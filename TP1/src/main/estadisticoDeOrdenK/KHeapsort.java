@@ -30,7 +30,7 @@ public class KHeapsort implements BuscadorEstadisticoDeOrdenK {
 		}
 		
 		for ( int i = 0; i < conjunto.length; i++){
-			heap.add(conjunto[i]);
+			heap.offer(conjunto[i]);
 		}
 		
 		int lastIndex = (kMenorALaMitad) ? conjunto.length - 1 - k : k;

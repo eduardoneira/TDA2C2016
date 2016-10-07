@@ -7,10 +7,12 @@ import grafos.Digrafo;
 
 public abstract class Caminos {
 
-    private Integer src;
+    protected Integer src;
+    protected Digrafo diGraph;
 
     protected Caminos(Digrafo g, Integer origin) {
         src = origin;
+        diGraph = g;
         calcularDistancias();
     }
 
