@@ -1,14 +1,9 @@
 package estadisticoDeOrdenK;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import org.junit.Before;
@@ -101,8 +96,7 @@ public abstract class BuscadorEstadisticoDeOrdenKTest {
 		conjunto[0] = 3;
 		conjunto[1] = 5;
 		conjunto[2] = 2;
-		
-		int k = longitud;
+
 		assertNull(buscador.buscarEstadisticoDeOrdenK(conjunto, 3));
 	}
 	

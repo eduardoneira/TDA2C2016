@@ -9,6 +9,7 @@ import grafos.Digrafo;
 import grafos.recorridos.BFS;
 import grafos.recorridos.Caminos;
 
+//TODO: Refactorizar como estadistico, sacar una clase abstract
 public class BFSTest {
 
 	@Test

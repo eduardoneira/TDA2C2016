@@ -10,8 +10,8 @@ import grafos.Digrafo;
 
 public class BFS extends Caminos {
 
-    private double dist[];
-    private Arista edge[];
+    protected double dist[];
+    protected Arista edge[];
 
     public BFS(Digrafo g, Integer origin) {
     	super(g, origin);
@@ -24,11 +24,7 @@ public class BFS extends Caminos {
 
 	@Override
 	protected void calcularDistancias() {
-		//TODO: tal vez refactorizar esto, no me gusta que este aca
-    	this.dist = new double[this.diGraph.n()];
-        this.edge = new Arista[this.diGraph.n()];
 		
-		//Inicializar dist, -1 representa el infinito
 		for (int i = 0; i < this.diGraph.n(); i++){
 			if (i != this.src){
 				this.dist[i] = Double.POSITIVE_INFINITY;
@@ -37,10 +33,8 @@ public class BFS extends Caminos {
 		
 		dist[this.src] = 0;
 		
-		//Cola para ir guardando nodos
 		Queue<Integer> queue = new LinkedList<>();
 		
-		//Guardo el origen
 		queue.offer(this.src);
 		
 		while (!queue.isEmpty()){
@@ -49,7 +43,7 @@ public class BFS extends Caminos {
 			for (Integer node : this.diGraph.adyacentes(current)){
 				if (!this.visitado(node)) {
 					this.dist[node] = this.dist[current] + 1;
-					this.edge[node] = new Arista(current, node, -1); // Este BFS va a ignorar el peso, de nuevo me cago en el espacio :p
+					this.edge[node] = new Arista(current, node, -1); // Este BFS va a ignorar el peso, de nuevo me cago en el espacio :o
 					queue.offer(node);
 				}
 			}
@@ -78,7 +72,13 @@ public class BFS extends Caminos {
 		return camino;
 	}
 	   
-    private Arista aristaHaciaVertice(Integer v) { 
+    protected Arista aristaHaciaVertice(Integer v) { 
     	return edge[v]; 
     }
+
+	@Override
+	protected void init() {
+    	this.dist = new double[this.diGraph.n()];
+        this.edge = new Arista[this.diGraph.n()];		
+	}
 }

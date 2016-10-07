@@ -8,12 +8,12 @@ import java.util.Set;
 
 public class Digrafo implements Iterable<Integer>{
 	
-	private Set<Integer> v;
-	private Set<Arista> e;
+	protected Set<Integer> v;
+	protected Set<Arista> e;
 	//Estas dos estructuras van a estar para que sea O(1) conseguir los nodos y aristas adyacenter aunque sacrificando mucho espacio.
 	//Ver si se puede mejorar
-	private Map<Integer,Set<Arista>> adyacentEdges;
-	private Map<Integer,Set<Integer>> adyacentNodes;
+	protected Map<Integer,Set<Arista>> adyacentEdges;
+	protected Map<Integer,Set<Integer>> adyacentNodes;
 	
 	/**
 	 * Inicializa digrafo con n vertices.

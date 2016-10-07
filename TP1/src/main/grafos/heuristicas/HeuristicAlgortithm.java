@@ -8,11 +8,18 @@ import grafos.Punto;
  */
 public abstract class HeuristicAlgortithm implements Heuristic{
 		
-	public HeuristicAlgortithm(Punto destination) {
+	public HeuristicAlgortithm() {
 		super();
-		this.destination = destination;
 	}
 	
-	protected Punto destination;	
-	
+	protected Punto destination;
+
+	public Punto getDestination() {
+		return destination;
+	}
+
+	public void setDestination(Punto destination) {
+		this.destination = destination;
+	}
+
 }
