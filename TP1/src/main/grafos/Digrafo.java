@@ -95,7 +95,12 @@ public class Digrafo implements Iterable<Integer>{
 		return e;
 	}
 	
-	public VerticeGrilla getVerticeGrilla(Integer v){
+	public Arista arista(Integer src, Integer dst){
+		for (Arista arista : aristasAdyacentes(src)){
+			if (arista.getDst().equals(dst)){
+				return arista;
+			}
+		}
 		return null;
 	}
 	
