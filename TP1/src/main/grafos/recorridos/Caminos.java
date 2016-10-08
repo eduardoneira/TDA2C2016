@@ -5,6 +5,8 @@ import java.util.List;
 
 import grafos.Arista;
 import grafos.Digrafo;
+import grafos.heuristicas.HeuristicAlgortithm;
+import grafos.heuristicas.NullHeuristic;
 
 public abstract class Caminos {
 
@@ -13,11 +15,16 @@ public abstract class Caminos {
     protected Integer src;
     protected Integer dest;
     protected Digrafo g;
+    protected HeuristicAlgortithm heuristica;
 
     protected double dist[];
     protected Arista edge[];
     
     public Caminos(Digrafo g, Integer origen, Integer destino) {
+    	this(g, origen, destino, new NullHeuristic());
+    }
+    
+    public Caminos(Digrafo g, Integer origen, Integer destino, HeuristicAlgortithm heuristica){
         src = origen;
         dest = destino;
         this.g = g;
@@ -25,10 +32,12 @@ public abstract class Caminos {
         dist = new double[g.n()];
         edge = new Arista[g.n()];
         
-        for (int i = 0; i < dist.length; i++){
+        for (int i = 0; i < g.n(); i++){
         	dist[i] = INFINITY;
         }
         dist[origen] = 0;
+        
+        this.heuristica = heuristica;
         
         calcularDistancias();
     }
@@ -45,7 +54,7 @@ public abstract class Caminos {
     
     public List<Arista> camino(Integer v){
 		// Si no existe el camino devuelvo null
-		if (dist[v] == Double.POSITIVE_INFINITY) {
+		if (dist[v] == INFINITY) {
 			return null;
 		}
 		

@@ -10,13 +10,13 @@ import grafos.VerticeGrilla;
  * Clase que encapsula algoritmos que usen heuristicas
  */
 public abstract class HeuristicAlgortithm implements Heuristic, Comparator<VerticeGrilla>{
-		
+	
+	protected Punto destination;
+	
 	public HeuristicAlgortithm() {
 		super();
 	}
 	
-	protected Punto destination;
-
 	public Punto getDestination() {
 		return destination;
 	}

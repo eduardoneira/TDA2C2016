@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import grafos.Arista;
-
 import grafos.Digrafo;
 
 public class BFS extends Caminos {
@@ -20,7 +19,7 @@ public class BFS extends Caminos {
 		
 		queue.offer(this.src);
 		
-		while (!queue.isEmpty()){
+		while (!queue.isEmpty() && !this.visitado(this.dest)){
 			Integer current = queue.poll();
 			
 			for (Integer node : this.g.adyacentes(current)){

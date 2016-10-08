@@ -22,7 +22,7 @@ public class BFSTest {
 		graph.agregarArista(2, 5, 1);
 		graph.agregarArista(3, 5, 1);
 		
-		Caminos camino = new BFS(graph, 0,graph.n()-1);
+		Caminos camino = new BFS(graph, 0, 4);
 		assertTrue(camino.distancia(0) == 0);
 		assertTrue(camino.distancia(1) == 1);
 		assertTrue(camino.distancia(2) == 1);

@@ -5,19 +5,32 @@ import java.util.Map;
 
 import grafos.heuristicas.EuclideanDistance;
 import grafos.heuristicas.Heuristic;
+import grafos.heuristicas.ManhattanDistance;
 
-//TODO : Refactor a constructor y limitar como agregar aristas. Además revisar si esta bien
+/**
+ * @author eduardo.neira
+ *
+ */
 public class Grilla extends Digrafo{
-
-	private Map<Integer,VerticeGrilla> grilla;
-	//TODO: hacer para que se pueda seleccionar distinto por grilla
-	private Heuristic distancia = new EuclideanDistance();
-	
-	public Grilla(int n) {
-		super(n);
-		this.grilla = new HashMap<>();
 		
+	private Map<Integer,VerticeGrilla> mapaVertices;
+	
+	private Heuristic distancia;
+	
+	private static final double MAXDISTANCEEDGE = Math.sqrt(2);
+	
+	/**
+	 * @param n : numero de vertices
+	 * @param rectangular : define si pueden o no haber aristas diagonales
+	 */
+	public Grilla(int n,boolean rectangular) {
+		super(n);				
 		this.crearBaseGrilla(this.encontrarNGrilla(n), n);
+		if (rectangular) { 
+			this.distancia = new ManhattanDistance();
+		} else {
+			this.distancia = new EuclideanDistance();
+		}
 	}
 	
 	private int encontrarNGrilla(int vertices){
@@ -33,14 +46,17 @@ public class Grilla extends Digrafo{
 		return n2;
 	}
 	
+	//Con los vertices que tiene crea la grilla más parecida a una matriz cuadrada
 	private void crearBaseGrilla(int n, int vertices){
+		
+		this.mapaVertices = new HashMap<>();
 		
 		int x = 0;
 		int y = 0;
 		
 		for (int i = 0; i < vertices; i++){
 			
-			this.grilla.put(i,new VerticeGrilla(i, new Punto(x, y)));
+			this.mapaVertices.put(i,new VerticeGrilla(i, new Punto(x, y)));
 			x++;
 			
 			if (x % n == 0){
@@ -50,22 +66,24 @@ public class Grilla extends Digrafo{
 		}
 	}
 	
-	@Override
 	public void agregarArista(Integer src, Integer dst, int weight){
-		if (this.sonAdyacentes(src,dst)){
+		if (this.sonAdyacentes(src, dst)) {
 			super.agregarArista(src, dst, weight);
 		}
 	}
 	
 	private boolean sonAdyacentes(int src, int dst){
-		//TODO : Ver si se puede generalizar
-		if (this.distancia.distance(grilla.get(src).getPunto(), grilla.get(dst).getPunto()) <= Math.sqrt(2)){
-			return true;
-		}
-		return false;
+		Punto puntoSrc = mapaVertices.get(src).getPunto();
+		Punto puntoDst = mapaVertices.get(dst).getPunto();
+		
+		return (this.distancia.distance(puntoSrc, puntoDst) <= MAXDISTANCEEDGE);
 	}
 	
 	public VerticeGrilla getVerticeGrilla(Integer v){
-		return this.grilla.get(v);
+		return this.mapaVertices.get(v);
+	}
+	
+	public Punto getPuntoDeVertice(Integer v){
+		return this.getVerticeGrilla(v).getPunto();
 	}
 }

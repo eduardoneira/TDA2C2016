@@ -5,27 +5,23 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import grafos.Grilla;
-import grafos.Punto;
-import grafos.heuristicas.EuclideanDistance;
-import grafos.heuristicas.ManhattanDistance;
 import grafos.heuristicas.NullHeuristic;
 import grafos.recorridos.HeuristicSearch;
 
+//TODO : hacer un test posta y una mejor manera de generar caminos, estaba re duro cuando hice esto
 public class HeuristicSearchTest {
 
 	@Test
-	public void test() {
+	public void compilaTest() {
 		Grilla graph = this.generarTodosLosCaminos();
 		
-		HeuristicSearch camino = new HeuristicSearch(graph, 0, new NullHeuristic());
-		camino.setDestino(6);
-		camino.calcularDistancias();
+		HeuristicSearch camino = new HeuristicSearch(graph, 0, 7, new NullHeuristic());
 		
-		System.out.println("termino el test");
+		assertTrue(camino != null);
 	}
 	
 	private Grilla generarTodosLosCaminos(){
-		Grilla graph = new Grilla(9);
+		Grilla graph = new Grilla(9,true);
 		
 		for (int i = 0; i < 2; i++){
 			

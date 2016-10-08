@@ -32,69 +32,42 @@ public class Digrafo implements Iterable<Integer>{
 		}
 	}
 	
-	/**
-	 * 
-	 * @return cantidad de vertices
-	 */
 	public int n(){
 		return v.size();
 	}
 	
 
-	/**
-	 * 
-	 * @return cantidad de aristas
-	 */
 	public int m(){
 		return e.size();
 	}
 
-	/**
-	 * 
-	 * @param v
-	 * @return conjunto de vertices adyacentes a v.
-	 */
 	public Set<Integer> adyacentes(Integer v){
 		return this.adyacentNodes.get(v);
 	}
 
-	/**
-	 * 
-	 * @param v
-	 * @return conjunto de aristas adyacentes a v.
-	 */
 	public Set<Arista> aristasAdyacentes(Integer v){
 		return adyacentEdges.get(v);
 	}
-	
+
 	public void agregarArista(Integer src, Integer dst, int weight){
 		Arista edge = new Arista(src, dst, weight);
 		adyacentNodes.get(src).add(dst);
 		adyacentEdges.get(src).add(edge);
 		e.add(edge);
 	}
-	
-	@Override
+
 	public Iterator<Integer> iterator(){
 		return v.iterator();
 	}
-	
-	/**
-	 * 
-	 * @return conjunto de vertices del grafo.
-	 */
+
 	public Set<Integer> v(){
 		return v;
 	}
-	
-	/**
-	 * 
-	 * @return conjunto de aristas del grafo.
-	 */
+
 	public Set<Arista> e(){
 		return e;
 	}
-	
+
 	public Arista arista(Integer src, Integer dst){
 		for (Arista arista : aristasAdyacentes(src)){
 			if (arista.getDst().equals(dst)){
