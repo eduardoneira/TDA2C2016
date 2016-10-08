@@ -9,8 +9,9 @@ import grafos.heuristicas.ManhattanDistance;
 
 /**
  * @author eduardo.neira
- *
+ * Grilla para hacer los algoritmos de heuristicas
  */
+//TODO: ver si se puede mejorar, hacer un refactor
 public class Grilla extends Digrafo{
 		
 	private Map<Integer,VerticeGrilla> mapaVertices;
@@ -25,7 +26,7 @@ public class Grilla extends Digrafo{
 	 */
 	public Grilla(int n,boolean rectangular) {
 		super(n);				
-		this.crearBaseGrilla(this.encontrarNGrilla(n), n);
+		this.crearGrillaBase(this.encontrarNDeGrilla(n), n);
 		if (rectangular) { 
 			this.distancia = new ManhattanDistance();
 		} else {
@@ -33,7 +34,7 @@ public class Grilla extends Digrafo{
 		}
 	}
 	
-	private int encontrarNGrilla(int vertices){
+	private int encontrarNDeGrilla(int vertices){
 		boolean encontreN2 = false;
 		int n2 = 0;
 		
@@ -46,8 +47,8 @@ public class Grilla extends Digrafo{
 		return n2;
 	}
 	
-	//Con los vertices que tiene crea la grilla más parecida a una matriz cuadrada
-	private void crearBaseGrilla(int n, int vertices){
+	//Con los vertices que tiene trata de crear algo parecido a una grilla cuadrada
+	private void crearGrillaBase(int n, int vertices){
 		
 		this.mapaVertices = new HashMap<>();
 		

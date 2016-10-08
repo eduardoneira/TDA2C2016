@@ -23,11 +23,12 @@ public class HeuristicSearch extends Caminos{
 	@Override
 	public void calcularDistancias() {
 		
+		//TODO:  Arreglar esto en algún momento, la verdad bastante feo
 		Grilla grilla = (Grilla) this.g;
 		
 		this.heuristica.setDestination(grilla.getPuntoDeVertice(this.dest));
 		
-		Queue<VerticeGrilla> queue = new PriorityQueue<>(grilla.n(),heuristica);
+		Queue<VerticeGrilla> queue = new PriorityQueue<>(this.heuristica);
 		
 		queue.offer(grilla.getVerticeGrilla(this.src));
 		
