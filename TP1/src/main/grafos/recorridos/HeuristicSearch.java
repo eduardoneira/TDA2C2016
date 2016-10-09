@@ -32,15 +32,19 @@ public class HeuristicSearch extends Caminos{
 		
 		queue.offer(grilla.getVerticeGrilla(this.src));
 		
-		while (!queue.isEmpty() && !this.visitado(this.dest)){
+		while (!queue.isEmpty()){
 			VerticeGrilla current = queue.poll();
 			
 			for (Integer node : grilla.adyacentes(current.getV())){
 				if (!this.visitado(node)) {
 					this.dist[node] = this.dist[current.getV()] + 1;
 					this.edge[node] = new Arista(current.getV(), node, -1);
+					if (node == this.dest){
+						return;
+					}
 					queue.offer(grilla.getVerticeGrilla(node));
 				}
+
 			}
 		}
 			

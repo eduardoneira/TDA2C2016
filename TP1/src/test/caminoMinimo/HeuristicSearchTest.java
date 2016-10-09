@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import grafos.Grilla;
 import grafos.heuristicas.NullHeuristic;
+import grafos.recorridos.Caminos;
 import grafos.recorridos.HeuristicSearch;
 
 //TODO : hacer un test posta y una mejor manera de generar caminos, estaba re duro cuando hice esto
@@ -15,7 +16,7 @@ public class HeuristicSearchTest {
 	public void compilaTest() {
 		Grilla graph = this.generarTodosLosCaminos();
 		
-		HeuristicSearch camino = new HeuristicSearch(graph, 0, 7, new NullHeuristic());
+		Caminos camino = new HeuristicSearch(graph, 0, 7, new NullHeuristic());
 		
 		assertTrue(camino != null);
 	}

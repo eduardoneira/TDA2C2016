@@ -24,13 +24,13 @@ public class Grilla extends Digrafo{
 	 * @param n : numero de vertices
 	 * @param rectangular : define si pueden o no haber aristas diagonales
 	 */
-	public Grilla(int n,boolean rectangular) {
+	public Grilla(int n, boolean permitirAristasDiagonales) {
 		super(n);				
 		this.crearGrillaBase(this.encontrarNDeGrilla(n), n);
-		if (rectangular) { 
-			this.distancia = new ManhattanDistance();
-		} else {
+		if (permitirAristasDiagonales) { 
 			this.distancia = new EuclideanDistance();
+		} else {
+			this.distancia = new ManhattanDistance();
 		}
 	}
 	

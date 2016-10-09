@@ -19,7 +19,7 @@ public class BFS extends Caminos {
 		
 		queue.offer(this.src);
 		
-		while (!queue.isEmpty() && !this.visitado(this.dest)){
+		while (!queue.isEmpty()){
 			Integer current = queue.poll();
 			
 			for (Integer node : this.g.adyacentes(current)){
@@ -27,6 +27,10 @@ public class BFS extends Caminos {
 					this.dist[node] = this.dist[current] + 1;
 					this.edge[node] = new Arista(current, node, -1); // Este BFS va a ignorar el peso, de nuevo me cago en el espacio :o
 					queue.offer(node);
+				}
+				//Si me encontre al destino, termino el algoritmo
+				if (node == this.dest){
+					return;
 				}
 			}
 		}
