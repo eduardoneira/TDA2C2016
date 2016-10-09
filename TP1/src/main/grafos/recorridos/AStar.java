@@ -13,7 +13,7 @@ import grafos.VerticeGrilla;
 import grafos.heuristicas.ManhattanDistance;
 
 public class AStar extends Caminos {
-
+	
 	public AStar(Digrafo g, Integer origen, Integer destino) {
 		super(g, origen, destino);
 	}
