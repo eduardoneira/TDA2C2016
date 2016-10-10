@@ -6,19 +6,32 @@ import static org.junit.Assert.assertNull;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 public abstract class BuscadorEstadisticoDeOrdenKTest {
 
-	private BuscadorEstadisticoDeOrdenK buscador;
+	protected BuscadorEstadisticoDeOrdenK buscador;
+	private long start;
 
 	private static final int N = 1000;
 	private static final int MAXINT = 1000;
-	
+
+	@Rule
+	public TestName name = new TestName();
+
 	@Before
 	public void setup(){
 		buscador = buscador();
+		start = System.nanoTime();
+	}
+
+	@After
+	public void end() {
+		System.out.println("Test " + name.getMethodName() + " tardo " + (System.nanoTime() - start) + " ns");
 	}
 
 	protected abstract BuscadorEstadisticoDeOrdenK buscador();
@@ -160,4 +173,5 @@ public abstract class BuscadorEstadisticoDeOrdenKTest {
 		int k = longitud - 1;
 		assertEquals(buscador.buscarEstadisticoDeOrdenK(conjunto, k), new Integer(5));
 	}
+	
 }
