@@ -65,8 +65,8 @@ public class AStar extends Caminos {
 				// Este es el mejor camino
 				gScore[vecino] = tentativeGScore;
 				fScore[vecino] = gScore[vecino] + heuristica.distancia(vecino);
-				this.dist[vecino] = this.dist[actual] + 1;
-				this.edge[vecino] = new Arista(actual, vecino, -1);
+				this.edge[vecino] = new Arista(actual, vecino, this.g.arista(actual, vecino).getWeight());
+				this.dist[vecino] = this.dist[actual] + this.g.arista(actual, vecino).getWeight();
 			}
 		}
 	}
