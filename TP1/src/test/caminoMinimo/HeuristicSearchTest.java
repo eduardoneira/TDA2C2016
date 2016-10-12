@@ -41,11 +41,20 @@ public class HeuristicSearchTest {
 		
 		Grilla grilla = factory.createGrilla();
 		
-		Caminos camino = new HeuristicSearch(grilla, 6, 8, new ManhattanDistance());
+		Caminos camino = new HeuristicSearch(grilla, 6, 2, new ManhattanDistance());
 		
 		assertTrue(camino != null);
 		
-		assertTrue(camino.distancia(0) == Double.POSITIVE_INFINITY);
+		assertEquals(camino.distancia(0),new Double(2),0.0000001);
+		assertEquals(camino.distancia(2),new Double(6),0.0000001);
+		assertEquals(camino.distancia(3),new Double(1),0.0000001);
+		assertEquals(camino.distancia(5),new Double(5),0.0000001);
+		assertEquals(camino.distancia(6),new Double(0),0.0000001);
+		assertEquals(camino.distancia(8),new Double(4),0.0000001);
+		assertEquals(camino.distancia(9),new Double(1),0.0000001);
+		assertEquals(camino.distancia(10),new Double(2),0.0000001);
+		assertEquals(camino.distancia(11),new Double(3),0.0000001);
+		
 	}
 	
 	@Test
