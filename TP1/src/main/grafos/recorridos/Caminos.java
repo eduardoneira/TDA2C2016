@@ -64,7 +64,7 @@ public abstract class Caminos {
 				
 		while (nodoActual != this.src){
 			Arista aristaAcutal = this.aristaHaciaVertice(nodoActual);
-			camino.add(0, aristaAcutal);
+			camino.add(0, aristaAcutal); //La agrego siempre al principio
 			nodoActual = aristaAcutal.getSrc();
 		}
 		

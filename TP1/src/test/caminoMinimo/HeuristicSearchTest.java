@@ -4,8 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import grafos.FactoryGrilla;
 import grafos.Grilla;
-import grafos.heuristicas.NullHeuristic;
+import grafos.heuristicas.ManhattanDistance;
 import grafos.recorridos.Caminos;
 import grafos.recorridos.HeuristicSearch;
 
@@ -16,42 +17,51 @@ public class HeuristicSearchTest {
 	public void compilaTest() {
 		Grilla graph = this.generarTodosLosCaminos();
 		
-		Caminos camino = new HeuristicSearch(graph, 0, 7, new NullHeuristic());
+		Caminos camino = new HeuristicSearch(graph, 0, 8, new ManhattanDistance());
 		
 		assertTrue(camino != null);
 	}
 	
 	private Grilla generarTodosLosCaminos(){
-		Grilla graph = new Grilla(9,true);
+		FactoryGrilla factory  =  new FactoryGrilla(3, 3, true);
 		
-		for (int i = 0; i < 2; i++){
-			
-			graph.agregarArista(i, i+1, 1);
-			graph.agregarArista(i+1, i, 1);
-			
-			graph.agregarArista(3+i, 3+i+1, 1);
-			graph.agregarArista(3+i+1, 3+i, 1);
-			
-			graph.agregarArista(6+i, 6+i+1, 1);
-			graph.agregarArista(6+i+1, 6+i, 1);
-			
-		}
+		factory.hacerGrafoCompletoPesosRandom();
 		
-		for (int i = 0; i < 4; i+=3){
-			
-			graph.agregarArista(i, i+3, 1);
-			graph.agregarArista(i+3, i, 1);
-			
-			graph.agregarArista(i+1, 3+i+1, 1);
-			graph.agregarArista(3+i+1, i+1, 1);
-			
-			graph.agregarArista(2+i, 3+i+2, 1);
-			graph.agregarArista(3+i+2, 2+i, 1);
-			
-		}
-		
-		
-		return graph;
+		return factory.createGrilla();
 	}
+	
+	@Test
+	public void obstaculoEnElMedio() {
+		FactoryGrilla factory  =  new FactoryGrilla(3, 3, true);
+		
+		factory.agregarColumna(0);
+		factory.agregarColumna(2);
+		factory.agregarFila(2);
+		
+		Grilla grilla = factory.createGrilla();
+		
+		Caminos camino = new HeuristicSearch(grilla, 3, 2, new ManhattanDistance());
+		
+		assertTrue(camino != null);
+	}
+	
+	@Test
+	public void aVerQueFlasheas() {
+		FactoryGrilla factory  =  new FactoryGrilla(4, 4, true);
+		
+		factory.agregarColumna(0);
+		factory.agregarColumna(3);
+		factory.agregarFila(0);
+		factory.agregarFila(3);
+		factory.agregarColumna(1, 0, 1);
+		factory.agregarFila(1, 0, 1);
+		
+		Grilla grilla = factory.createGrilla();
+		
+		Caminos camino = new HeuristicSearch(grilla, 8, 11, new ManhattanDistance());
+		
+		assertTrue(camino != null);
+	}
+	
 
 }
