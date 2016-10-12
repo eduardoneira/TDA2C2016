@@ -7,6 +7,7 @@ import org.junit.Test;
 import grafos.FactoryGrilla;
 import grafos.Grilla;
 import grafos.heuristicas.ManhattanDistance;
+import grafos.heuristicas.NullHeuristic;
 import grafos.recorridos.Caminos;
 import grafos.recorridos.HeuristicSearch;
 
@@ -32,17 +33,19 @@ public class HeuristicSearchTest {
 	
 	@Test
 	public void obstaculoEnElMedio() {
-		FactoryGrilla factory  =  new FactoryGrilla(3, 3, true);
+		FactoryGrilla factory  =  new FactoryGrilla(4, 3, true);
 		
 		factory.agregarColumna(0);
 		factory.agregarColumna(2);
-		factory.agregarFila(2);
+		factory.agregarFila(3);
 		
 		Grilla grilla = factory.createGrilla();
 		
-		Caminos camino = new HeuristicSearch(grilla, 3, 2, new ManhattanDistance());
+		Caminos camino = new HeuristicSearch(grilla, 6, 8, new ManhattanDistance());
 		
 		assertTrue(camino != null);
+		
+		assertTrue(camino.distancia(0) == Double.POSITIVE_INFINITY);
 	}
 	
 	@Test
@@ -58,7 +61,7 @@ public class HeuristicSearchTest {
 		
 		Grilla grilla = factory.createGrilla();
 		
-		Caminos camino = new HeuristicSearch(grilla, 8, 11, new ManhattanDistance());
+		Caminos camino = new HeuristicSearch(grilla, 8, 11, new NullHeuristic());
 		
 		assertTrue(camino != null);
 	}

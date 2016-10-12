@@ -1,11 +1,11 @@
 package grafos.recorridos;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
 import grafos.Arista;
 import grafos.Grilla;
-import grafos.VerticeGrilla;
 import grafos.heuristicas.HeuristicAlgortithm;
 
 
@@ -28,21 +28,32 @@ public class HeuristicSearch extends Caminos{
 		
 		this.heuristica.setDestination(grilla.getPuntoDeVertice(this.dest));
 		
-		Queue<VerticeGrilla> queue = new PriorityQueue<>(this.heuristica);
+		Queue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
+			@Override
+			public int compare(Integer u, Integer v) {
+				if (heuristica.distanceToDestination(grilla.getPuntoDeVertice(u)) < heuristica.distanceToDestination(grilla.getPuntoDeVertice(v)) ){
+					return -1;
+				} else if (heuristica.distanceToDestination(grilla.getPuntoDeVertice(u)) > heuristica.distanceToDestination(grilla.getPuntoDeVertice(v))){
+					return +1;
+				} else {
+					return 0;
+				}
+			}
+		});
 		
-		queue.offer(grilla.getVerticeGrilla(this.src));
+		queue.offer(this.src);
 		
 		while (!queue.isEmpty()){
-			VerticeGrilla current = queue.poll();
+			Integer current = queue.poll();
 			
-			for (Integer node : grilla.adyacentes(current.getV())){
+			for (Integer node : grilla.adyacentes(current)){
 				if (!this.visitado(node)) {
-					this.dist[node] = this.dist[current.getV()] + 1;
-					this.edge[node] = new Arista(current.getV(), node, -1);
+					this.dist[node] = this.dist[current] + 1;
+					this.edge[node] = new Arista(current, node, -1);
 					if (node == this.dest){
 						return;
 					}
-					queue.offer(grilla.getVerticeGrilla(node));
+					queue.offer(node);
 				}
 
 			}

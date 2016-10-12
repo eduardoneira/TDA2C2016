@@ -72,8 +72,17 @@ public class FactoryGrilla {
 	}
 	
 	public void agregarArista(Punto src, Punto dst){
-		this.grilla.agregarArista(src, dst, new Random().nextInt(MAXWEIGHT));
+		if (this.grilla != null)
+			this.grilla.agregarArista(src, dst, new Random().nextInt(MAXWEIGHT));
 	}
+	
+	public void agregarArista(Punto src, Punto dst, int weight){
+		if (this.grilla != null)
+			this.grilla.agregarArista(src, dst, weight);
+	}
+	
+	
+	
 	
 	public Grilla createGrilla(){
 		return this.grilla;

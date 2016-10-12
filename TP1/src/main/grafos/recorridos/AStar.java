@@ -9,7 +9,6 @@ import java.util.Queue;
 import grafos.Arista;
 import grafos.Digrafo;
 import grafos.Grilla;
-import grafos.VerticeGrilla;
 import grafos.heuristicas.ManhattanDistance;
 
 public class AStar extends Caminos {

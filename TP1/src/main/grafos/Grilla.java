@@ -14,7 +14,7 @@ import grafos.heuristicas.ManhattanDistance;
 //TODO: ver si se puede mejorar, hacer un refactor
 public class Grilla extends Digrafo{
 		
-	private Map<Integer,VerticeGrilla> mapaVertices;
+	private Map<Integer,Punto> mapaVertices;
 	
 	private Heuristic distancia;
 	
@@ -45,10 +45,10 @@ public class Grilla extends Digrafo{
 		
 		this.mapaVertices = new HashMap<>();		
 		
-		for (int x = 0; x < this.filas; x++){
-			for (int y = 0; y < this.columnas; y++){
+		for (int x = 0; x < this.columnas; x++){
+			for (int y = 0; y < this.filas; y++){
 				int verticeActual = x+(y*this.columnas);
-				this.mapaVertices.put(verticeActual,new VerticeGrilla(verticeActual, new Punto(x, y)));
+				this.mapaVertices.put(verticeActual, new Punto(x, y));
 			}
 		}
 	}
@@ -68,18 +68,15 @@ public class Grilla extends Digrafo{
 	}
 	
 	private boolean sonAdyacentes(int src, int dst){
-		Punto puntoSrc = mapaVertices.get(src).getPunto();
-		Punto puntoDst = mapaVertices.get(dst).getPunto();
+		Punto puntoSrc = mapaVertices.get(src);
+		Punto puntoDst = mapaVertices.get(dst);
 		
 		return (this.distancia.distance(puntoSrc, puntoDst) <= MAXDISTANCE);
 	}
 	
-	public VerticeGrilla getVerticeGrilla(Integer v){
-		return this.mapaVertices.get(v);
-	}
-	
+
 	public Punto getPuntoDeVertice(Integer v){
-		return this.getVerticeGrilla(v).getPunto();
+		return this.mapaVertices.get(v);
 	}
 	
 	
