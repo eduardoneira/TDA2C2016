@@ -15,11 +15,12 @@ public class Dijkstra extends Caminos {
 		super(g, origen, destino);
 	}
 	
-	private void relax(Integer u, Integer v){
+	private void relax(Queue<Integer> minHeap, Integer u, Integer v){
 		Arista aristaUV = g.arista(u, v);
 		if (dist[v] > dist[u] + aristaUV.getWeight()){
 			dist[v] = dist[u] + aristaUV.getWeight();
 			edge[v] = aristaUV;
+			minHeap.add(v);
 		}
 	}
 
@@ -40,38 +41,15 @@ public class Dijkstra extends Caminos {
 		});
 		
 		minHeap.addAll(g.v());
-		while (!minHeap.isEmpty()){
+		while (s.size() < g.n()){
 			Integer u = minHeap.poll();
-			s.add(u);
-			for (Integer v : g.adyacentes(u)){
-				relax(u,v);
+			if(!s.contains(u)){
+				s.add(u);
+				for (Integer v : g.adyacentes(u)){
+					relax(minHeap, u,v);
+				}
 			}
 		}
 	}
-
-/*	RELAX(u,v,w)
- * 		if v.d > u.d + w(u,v)
- * 			v.d = u.d + w(u,v)
- * 			v.p = u
- * 
- * INITIALIZE-SINGLE-SOURCE(G, s)
- * 		for each vertex v in G.V
- * 			v.d = infinity
- * 			v.p = NULL
- * 		s.d = 0
- * 
- * 	DIJKSTRA(G, w, s)
- * 		INITIALIZE-SINGLE-SOURCE(G, s)
- * 		S = {}
- * 		Q = G.V
- * 		while Q != {}
- * 			u = EXTRACT-MIN(Q)
- * 			S.add(u)
- * 			for each vertex v in G.adj(u)
- * 				RELAX(u,v,w)
- * 
- */
-	
-	
 	
 }
