@@ -9,7 +9,11 @@ import java.util.Queue;
 import grafos.Arista;
 import grafos.Digrafo;
 import grafos.Grilla;
+<<<<<<< HEAD
 import grafos.heuristicas.HeuristicAlgortithm;
+=======
+import grafos.heuristicas.ManhattanDistance;
+>>>>>>> refs/remotes/origin/master
 
 public class AStar extends Caminos {
 
