@@ -31,7 +31,7 @@ public abstract class BuscadorEstadisticoDeOrdenKTest {
 
 	@After
 	public void end() {
-		System.out.println("Test " + name.getMethodName() + " tardo " + (System.nanoTime() - start) + " ns");
+		System.out.println("Test " + buscador.getClass().getName() + " " + name.getMethodName() + " tardo " + (System.nanoTime() - start) * Math.pow(10, -9) + " s");
 	}
 
 	protected abstract BuscadorEstadisticoDeOrdenK buscador();
@@ -53,49 +53,16 @@ public abstract class BuscadorEstadisticoDeOrdenKTest {
 		Integer[] conjuntoOrdenado = conjunto.clone();
 		Arrays.sort(conjuntoOrdenado);
 
+//		Usar esto en vez del for de abajo para calcular tiempos!
+//		int k = (new Random()).nextInt(MAXINT);
+//		assertEquals(buscador.buscarEstadisticoDeOrdenK(conjunto, k), conjuntoOrdenado[k]);
+		
 		for(int k = 0; k < conjunto.length; k++){
 			assertEquals(buscador.buscarEstadisticoDeOrdenK(conjunto, k), conjuntoOrdenado[k]);
 		}
 		
 	}
 
-//TODO: Algun dia actulizar tal vez, la verdad fiaca porque en si solo sirve para el de Fuerza bruta pero bue lo dejo
-//	private Map<Integer,List<Integer>> getKPosibles(Integer[] conjunto){
-//		Arrays.sort(conjunto);
-//		Map<Integer,List<Integer>> map = new HashMap<Integer,List<Integer>>();
-//		for (int i = 0; i < conjunto.length; i++){
-//			Integer actual = conjunto[i];
-//			List<Integer> listActual;
-//			
-//			if (map.containsKey(actual)){
-//				listActual = map.get(actual);
-//			}else {
-//				listActual = new ArrayList<Integer>();
-//			}
-//			
-//			listActual.add(i);
-//			map.put(actual,listActual);
-//		}
-//		return map;
-//	}
-//	
-//	@Test
-//	public void testDeprecado() {
-//		Integer[] conjunto = this.setUpConjunto();
-//		//Mapa para los posibles valores de k por numero del conjunto
-//		Map<Integer,List<Integer>> kPosibles = getKPosibles(conjunto.clone());
-//		BuscadorEstadisticoDeOrdenK fuerzaBruta = new FuerzaBruta();
-//		for(int k = 0; k < conjunto.length; k++){
-//			for (int c = 0; c < conjunto.length; c++){
-//				if (kPosibles.get(conjunto[c]).contains(k)){
-//					assertEquals(fuerzaBruta.buscarEstadisticoDeOrdenK(conjunto, k), conjunto[c]);
-//				}else {
-//					assertNotEquals(fuerzaBruta.buscarEstadisticoDeOrdenK(conjunto, k), conjunto[c]);
-//				}
-//			}
-//		}
-//	}
-	
 	@Test
 	public void buscarEnArrayVacioDevuelveNull(){
 		Integer[] conjunto = new Integer[0];
