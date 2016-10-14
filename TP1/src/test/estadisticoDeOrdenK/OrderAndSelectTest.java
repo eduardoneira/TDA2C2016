@@ -12,19 +12,34 @@ public class OrderAndSelectTest extends BuscadorEstadisticoDeOrdenKTest {
 	}
 
 	/*
-	 * Mejor caso: particiones balanceadas t =  s
+	 * Mejor caso: particiones balanceadas, en este caso van a quedar la mitad
+	 * de elementos a un lado del pivot y la otra mitad al otro lado (+-1) t = s
 	 */
 	@Test
 	public void mejorCasoOrderAndSelectTest() {
-								
+		// TODO!
+		int longitud = 16;
+		Integer[] conjunto = new Integer[longitud];
+		for (int i = 0; i < conjunto.length / 2; i++)
+			conjunto[i] = 1;
+		for (int i = conjunto.length / 2; i < conjunto.length; i++)
+			conjunto[i] = 2;
+		int k = longitud - 1;
+		assertEquals(new Integer(2), buscador.buscarEstadisticoDeOrdenK(conjunto, k));
 	}
 
 	/*
-	 * Peor caso: particiones desbalanceadas t =  s
+	 * Peor caso: particiones desbalanceadas, con todo el conjunto con iguales valores, esta ordenado y 
+	 * se tiene el peor caso t = 217945ns
 	 */
 	@Test
 	public void peorCasoOrderAndSelectTest() {
-																																																																																																																																																				
+		int longitud = 16;
+		Integer[] conjunto = new Integer[longitud];
+		for (int i = 0; i < conjunto.length; i++)
+			conjunto[i] = 1; 
+		int k = longitud - 1;
+		assertEquals(new Integer(15), buscador.buscarEstadisticoDeOrdenK(conjunto, k));
 	}
 
 }

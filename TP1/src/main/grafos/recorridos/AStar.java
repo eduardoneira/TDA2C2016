@@ -74,7 +74,6 @@ public class AStar extends Caminos {
 					this.edge[vecino] = new Arista(actual, vecino, this.g.arista(actual, vecino).getWeight());
 					this.dist[vecino] = this.dist[actual] + this.g.arista(actual, vecino).getWeight();
 
-					// Movido aca el add para que cuando se agregue a la cola de prioridad el fScore por el que compara ya este actualizado
 					nodosPorEvaluar.add(vecino);
 
 				} else if (vecino == this.dest) {
@@ -83,5 +82,6 @@ public class AStar extends Caminos {
 				}
 			}
 		}
+		return; // No llega a destino
 	}
 }

@@ -7,8 +7,6 @@ public class OrderAndSelect implements BuscadorEstadisticoDeOrdenK {
 		if (k < 0 || list.length == 0 || k >= list.length)
 			return null;
 
-		// Arrays.sort(list); // Quicksort doble pivot
-
 		quicksort(list, 0, list.length - 1);
 		return list[k];
 	}
