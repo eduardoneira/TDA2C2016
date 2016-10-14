@@ -21,25 +21,13 @@ public class HeuristicSearch extends Caminos{
     }
 
 	@Override
-	public void calcularDistancias() {
-		
+	public void calcularDistancias() {		
 		//TODO:  Arreglar esto en algún momento, la verdad bastante feo
 		Grilla grilla = (Grilla) this.g;
 		
 		this.heuristica.setDestination(grilla.getPuntoDeVertice(this.dest));
 		
-		Queue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
-			@Override
-			public int compare(Integer u, Integer v) {
-				if (heuristica.distanceToDestination(grilla.getPuntoDeVertice(u)) < heuristica.distanceToDestination(grilla.getPuntoDeVertice(v)) ){
-					return -1;
-				} else if (heuristica.distanceToDestination(grilla.getPuntoDeVertice(u)) > heuristica.distanceToDestination(grilla.getPuntoDeVertice(v))){
-					return +1;
-				} else {
-					return 0;
-				}
-			}
-		});
+		Queue<Integer> queue = this.createQueue(grilla);
 		
 		queue.offer(this.src);
 		
@@ -59,5 +47,20 @@ public class HeuristicSearch extends Caminos{
 			}
 		}
 			
+	}
+	
+	private Queue<Integer> createQueue(Grilla grilla){
+		return new PriorityQueue<>(new Comparator<Integer>() {
+			@Override
+			public int compare(Integer u, Integer v) {
+				if (heuristica.distanceToDestination(grilla.getPuntoDeVertice(u)) < heuristica.distanceToDestination(grilla.getPuntoDeVertice(v)) ){
+					return -1;
+				} else if (heuristica.distanceToDestination(grilla.getPuntoDeVertice(u)) > heuristica.distanceToDestination(grilla.getPuntoDeVertice(v))){
+					return +1;
+				} else {
+					return 0;
+				}
+			}
+		});
 	}
 }
