@@ -7,7 +7,6 @@ import org.junit.Test;
 import grafos.Arista;
 import grafos.FactoryGrilla;
 import grafos.Grilla;
-import grafos.heuristicas.ManhattanDistance;
 import grafos.recorridos.AStar;
 import grafos.recorridos.Caminos;
 
@@ -17,7 +16,7 @@ public class AStarTest {
 	public void compilaTest() {
 		Grilla graph = this.generarTodosLosCaminos();
 		
-		Caminos camino = new AStar(graph, 0, 7, new ManhattanDistance());
+		Caminos camino = new AStar(graph, 0, 7);
 		
 		assertTrue(camino != null);
 	}
@@ -41,7 +40,7 @@ public class AStarTest {
 		graph.agregarArista(2, 5, 1);
 		graph.agregarArista(3, 5, 1);
 		
-		Caminos camino = new AStar(graph, 0, 4, new ManhattanDistance());
+		Caminos camino = new AStar(graph, 0, 4);
 		assertTrue(camino.distancia(0) == 0);
 		assertTrue(camino.distancia(1) == 1);
 		assertTrue(camino.distancia(2) == 1);
@@ -70,7 +69,7 @@ public class AStarTest {
 		graph.agregarArista(1, 2, 1);
 		graph.agregarArista(2, 3, 1);
 		
-		Caminos camino = new AStar(graph, 0, 3, new ManhattanDistance());
+		Caminos camino = new AStar(graph, 0, 3);
 		assertTrue(camino.distancia(0) == 0);
 		assertTrue(camino.distancia(1) == 1);
 		assertTrue(camino.distancia(2) == 2);
