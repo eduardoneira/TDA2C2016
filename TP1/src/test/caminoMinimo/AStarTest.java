@@ -5,7 +5,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import grafos.Arista;
+import grafos.FactoryGrilla;
 import grafos.Grilla;
+import grafos.heuristicas.ManhattanDistance;
 import grafos.recorridos.AStar;
 import grafos.recorridos.Caminos;
 
@@ -15,48 +17,23 @@ public class AStarTest {
 	public void compilaTest() {
 		Grilla graph = this.generarTodosLosCaminos();
 		
-		Caminos camino = new AStar(graph, 0, 7);
+		Caminos camino = new AStar(graph, 0, 7, new ManhattanDistance());
 		
 		assertTrue(camino != null);
 	}
 	
 	private Grilla generarTodosLosCaminos(){
-		Grilla graph = new Grilla(9,true);
+		FactoryGrilla factory  =  new FactoryGrilla(3, 3, true);
 		
-		for (int i = 0; i < 2; i++){
-			
-			graph.agregarArista(i, i+1, 1);
-			graph.agregarArista(i+1, i, 1);
-			
-			graph.agregarArista(3+i, 3+i+1, 1);
-			graph.agregarArista(3+i+1, 3+i, 1);
-			
-			graph.agregarArista(6+i, 6+i+1, 1);
-			graph.agregarArista(6+i+1, 6+i, 1);
-			
-		}
+		factory.hacerGrafoCompletoPesosRandom();
 		
-		for (int i = 0; i < 4; i+=3){
-			
-			graph.agregarArista(i, i+3, 1);
-			graph.agregarArista(i+3, i, 1);
-			
-			graph.agregarArista(i+1, 3+i+1, 1);
-			graph.agregarArista(3+i+1, i+1, 1);
-			
-			graph.agregarArista(2+i, 3+i+2, 1);
-			graph.agregarArista(3+i+2, 2+i, 1);
-			
-		}
-		
-		
-		return graph;
+		return factory.createGrilla();
 	}
 	
 	@Test
 	public void chiquitoTest(){
 		
-		Grilla graph = new Grilla(6, true);
+		Grilla graph = new FactoryGrilla(2, 3, true).createGrilla();
 		graph.agregarArista(0, 1, 1);
 		graph.agregarArista(0, 2, 1);
 		graph.agregarArista(1, 3, 1);
@@ -64,7 +41,7 @@ public class AStarTest {
 		graph.agregarArista(2, 5, 1);
 		graph.agregarArista(3, 5, 1);
 		
-		Caminos camino = new AStar(graph, 0, 4);
+		Caminos camino = new AStar(graph, 0, 4, new ManhattanDistance());
 		assertTrue(camino.distancia(0) == 0);
 		assertTrue(camino.distancia(1) == 1);
 		assertTrue(camino.distancia(2) == 1);
@@ -87,13 +64,13 @@ public class AStarTest {
 	@Test
 	public void masChiquitoTest(){
 		
-		Grilla graph = new Grilla(4, true);
+		Grilla graph = new FactoryGrilla(2, 2, true).createGrilla();
 		graph.agregarArista(0, 1, 1);
 		graph.agregarArista(0, 3, 10);
 		graph.agregarArista(1, 2, 1);
 		graph.agregarArista(2, 3, 1);
 		
-		Caminos camino = new AStar(graph, 0, 3);
+		Caminos camino = new AStar(graph, 0, 3, new ManhattanDistance());
 		assertTrue(camino.distancia(0) == 0);
 		assertTrue(camino.distancia(1) == 1);
 		assertTrue(camino.distancia(2) == 2);

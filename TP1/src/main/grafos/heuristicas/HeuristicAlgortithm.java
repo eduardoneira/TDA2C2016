@@ -1,15 +1,12 @@
 package grafos.heuristicas;
 
-import java.util.Comparator;
-
 import grafos.Punto;
-import grafos.VerticeGrilla;
 
 /**
  * @author Edu
  * Clase que encapsula algoritmos que usen heuristicas
  */
-public abstract class HeuristicAlgortithm implements Heuristic, Comparator<VerticeGrilla>{
+public abstract class HeuristicAlgortithm implements Heuristic{
 	
 	protected Punto destination;
 	
@@ -25,21 +22,9 @@ public abstract class HeuristicAlgortithm implements Heuristic, Comparator<Verti
 		this.destination = destination;
 	}
 	
-	public Double heuristic(Punto p) {
-		return this.distance(p, this.destination);
+	public Double distanceToDestination(Punto p) {
+		return (this.destination != null ) ? this.distance(p, this.destination) : null;
 	}
-	
-	public int compare(VerticeGrilla v1, VerticeGrilla v2){
-		if (this.heuristic(v1.getPunto()) < this.heuristic(v2.getPunto())) {
-			return -1;
-		}
-		
-		if (this.heuristic(v1.getPunto()) < this.heuristic(v2.getPunto()) ){
-			return 1;
-		}
-		
-		return 0;
-	}	
 	
 
 }

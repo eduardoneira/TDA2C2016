@@ -14,19 +14,26 @@ import grafos.heuristicas.ManhattanDistance;
 //TODO: ver si se puede mejorar, hacer un refactor
 public class Grilla extends Digrafo{
 		
-	private Map<Integer,VerticeGrilla> mapaVertices;
+	private Map<Integer,Punto> mapaVertices;
 	
 	private Heuristic distancia;
 	
-	private static final double MAXDISTANCEEDGE = Math.sqrt(2);
+	private Integer filas;
+	
+	private Integer columnas;
+	
+	private static final double MAXDISTANCE = Math.sqrt(2);
 	
 	/**
-	 * @param n : numero de vertices
-	 * @param rectangular : define si pueden o no haber aristas diagonales
+	 * @param n : numero de filas
+	 * @param m : numero de columnas
+	 * @param permitirAristasDiagonales : define si pueden o no haber aristas diagonales
 	 */
-	public Grilla(int n, boolean permitirAristasDiagonales) {
-		super(n);				
-		this.crearGrillaBase(this.encontrarNDeGrilla(n), n);
+	public Grilla(int n,int m, boolean permitirAristasDiagonales){
+		super(n*m);
+		this.filas = n;
+		this.columnas = m;
+		this.crearGrillaBase();
 		if (permitirAristasDiagonales) { 
 			this.distancia = new EuclideanDistance();
 		} else {
@@ -34,35 +41,14 @@ public class Grilla extends Digrafo{
 		}
 	}
 	
-	private int encontrarNDeGrilla(int vertices){
-		boolean encontreN2 = false;
-		int n2 = 0;
+	private void crearGrillaBase(){
 		
-		while (!encontreN2){
-			n2++;
-			if (Math.pow(n2, 2) >= vertices){
-				encontreN2 = true;
-			}
-		}
-		return n2;
-	}
-	
-	//Con los vertices que tiene trata de crear algo parecido a una grilla cuadrada
-	private void crearGrillaBase(int n, int vertices){
+		this.mapaVertices = new HashMap<>();		
 		
-		this.mapaVertices = new HashMap<>();
-		
-		int x = 0;
-		int y = 0;
-		
-		for (int i = 0; i < vertices; i++){
-			
-			this.mapaVertices.put(i,new VerticeGrilla(i, new Punto(x, y)));
-			x++;
-			
-			if (x % n == 0){
-				x = 0;
-				y++;
+		for (int x = 0; x < this.columnas; x++){
+			for (int y = 0; y < this.filas; y++){
+				int verticeActual = x+(y*this.columnas);
+				this.mapaVertices.put(verticeActual, new Punto(x, y));
 			}
 		}
 	}
@@ -73,18 +59,25 @@ public class Grilla extends Digrafo{
 		}
 	}
 	
-	private boolean sonAdyacentes(int src, int dst){
-		Punto puntoSrc = mapaVertices.get(src).getPunto();
-		Punto puntoDst = mapaVertices.get(dst).getPunto();
-		
-		return (this.distancia.distance(puntoSrc, puntoDst) <= MAXDISTANCEEDGE);
+	public void agregarArista(Punto src, Punto dst, int weight){
+		if (this.distancia.distance(src, dst) <= MAXDISTANCE) {
+			int verticeSrc = src.getX() + (src.getY()*this.columnas);
+			int verticeDst = dst.getX() + (dst.getY()*this.columnas);
+			super.agregarArista(verticeSrc, verticeDst, weight);
+		}
 	}
 	
-	public VerticeGrilla getVerticeGrilla(Integer v){
+	private boolean sonAdyacentes(int src, int dst){
+		Punto puntoSrc = mapaVertices.get(src);
+		Punto puntoDst = mapaVertices.get(dst);
+		
+		return (this.distancia.distance(puntoSrc, puntoDst) <= MAXDISTANCE);
+	}
+	
+
+	public Punto getPuntoDeVertice(Integer v){
 		return this.mapaVertices.get(v);
 	}
 	
-	public Punto getPuntoDeVertice(Integer v){
-		return this.getVerticeGrilla(v).getPunto();
-	}
+	
 }
