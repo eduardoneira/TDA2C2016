@@ -11,8 +11,10 @@ public class KSeleccionesTest extends BuscadorEstadisticoDeOrdenKTest {
 		return new KSelecciones();
 	}
 
+	/* El mejor y peor caso tienen la misma complejidad para selection sort */
+	
 	/*
-	 * Mejor caso: conjunto ordenado t = 1.65*exp(-9) s
+	 * Mejor caso: conjunto ordenado
 	 */
 	@Test
 	public void mejorCasoKSeleccionesTest() {
@@ -26,7 +28,7 @@ public class KSeleccionesTest extends BuscadorEstadisticoDeOrdenKTest {
 	}
 
 	/*
-	 * Peor caso: conjunto ordenado al reves t = 1.26*exp(-4) s
+	 * Peor caso: conjunto ordenado al reves
 	 */
 	@Test
 	public void peorCasoKSeleccionesTest() {
