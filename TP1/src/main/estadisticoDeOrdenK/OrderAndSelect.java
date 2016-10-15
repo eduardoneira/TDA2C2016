@@ -10,7 +10,8 @@ public class OrderAndSelect implements BuscadorEstadisticoDeOrdenK {
 		quicksort(list, 0, list.length - 1);
 		return list[k];
 	}
-
+	
+	
 	public void quicksort(Integer list[], int izq, int der) {
 
 		int pivote = list[izq]; // tomamos primer elemento como pivote
