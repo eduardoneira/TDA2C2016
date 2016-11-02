@@ -11,6 +11,7 @@ import grafos.Digrafo;
 
 public class Dijkstra extends Caminos {
 
+	
 	public Dijkstra(Digrafo g, Integer origen, Integer destino) {
 		super(g, origen, destino);
 	}
@@ -46,7 +47,9 @@ public class Dijkstra extends Caminos {
 			if(!s.contains(u)){
 				s.add(u);
 				for (Integer v : g.adyacentes(u)){
-					relax(minHeap, u,v);
+					if (!s.contains(v)){
+						relax(minHeap, u,v);
+					}
 				}
 			}
 		}
