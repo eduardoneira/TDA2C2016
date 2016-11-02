@@ -8,23 +8,22 @@ import java.util.List;
 
 import utils.FileReader;
 
-public class KnapsackProblem {
-	
-	private FileReader file;
+public class KnapsackParser {
 	
 	private List<Knapsack> knapsacks;
 	
 	private List<KnapsackSolution> solutions;
 
-	public KnapsackProblem(String path) throws FileNotFoundException, IOException {
-		super();
-		this.file = new FileReader(path);
+	public KnapsackParser(String path) throws FileNotFoundException, IOException {
+		super();		
 		this.knapsacks = new ArrayList<>();
 		this.solutions = new ArrayList<>();
-		this.parseFile();		
+		this.parseFile(path);		
 	}
 	
-	private void parseFile() throws IOException {
+	private void parseFile(String path) throws FileNotFoundException, IOException {
+		
+		FileReader file = new FileReader(path);
 		
 		Integer id = 1;
 		
@@ -51,6 +50,10 @@ public class KnapsackProblem {
 			
 			knapsacks.add(new Knapsack(items, Integer.parseInt(c[1]), id));
 			solutions.add(new KnapsackSolution(selected, Integer.parseInt(z[1]), time[1]));
+			
+			//Tengo que leer dos lineas para pasar al siguiente test case
+			file.readLine();
+			file.readLine();
 			
 			id++;
 		}

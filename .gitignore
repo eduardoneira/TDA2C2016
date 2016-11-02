@@ -67,3 +67,6 @@ local.properties
 # Code Recommenders
 .recommenders/
 
+#Resources knapsack
+resources/knapsack/*
+

@@ -17,6 +17,10 @@ public class Knapsack {
 	}
 	
 	private void solve(){
+		this.buildSolution();
+	}
+	
+	private void buildSolution() {
 		
 	}
 	
