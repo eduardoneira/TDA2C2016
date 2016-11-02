@@ -1,5 +1,5 @@
 package dynamicProgramming;
 
-public class KnapsackProblemTes {
+public class KnapsackProblemTest {
 
 }
