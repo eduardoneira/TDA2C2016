@@ -4,13 +4,11 @@ public class Item {
 	
 	private Integer value;
 	private Integer weight;
-	private Boolean selected;
 		
-	public Item(Integer value, Integer weight, Boolean selected) {
+	public Item(Integer value, Integer weight) {
 		super();
 		this.value = value;
 		this.weight = weight;
-		this.selected = selected;
 	}
 	
 	public Integer getValue() {
@@ -25,12 +23,4 @@ public class Item {
 	public void setWeight(Integer weight) {
 		this.weight = weight;
 	}
-	public Boolean getSelected() {
-		return selected;
-	}
-	public void setSelected(Boolean selected) {
-		this.selected = selected;
-	}
-	
-	
 }

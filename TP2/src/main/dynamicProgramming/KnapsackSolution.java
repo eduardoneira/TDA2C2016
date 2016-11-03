@@ -41,14 +41,13 @@ public class KnapsackSolution {
 		this.time = time;
 	}
 	public void setTime(Double time){
-		this.time = String.format("%.2f",Math.round(time*100.0)/100.0);
+		this.time = String.format("%.2f",Math.floor(time*100.0)/100.0);
+		this.time = this.time.replace(',', '.');
 	}
 	//El tiempo tiene que ser nanosegundos
 	public void setTime(Long time){ 			
 		//TODO: checkear esto
-		double seconds = (double)time / 10000000.0;
-		String aux = String.valueOf(seconds);
-		this.time = aux.substring(0,1) + "." + aux.substring(1);
+		this.setTime((double)time / 10000000.0);
 	}
 	
 	

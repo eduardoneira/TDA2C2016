@@ -8,20 +8,20 @@ public class Knapsack {
 	private List<Item> items;
 	private Integer maxWeight;
 	private KnapsackSolution solution;
-	private Integer id;
 	//Must include maxWeight
-	private Integer[][] dynamicProgrammingMatrix = new Integer[items.size()][maxWeight+1];
+	private Integer[][] dynamicProgrammingMatrix;
 	
-	public Knapsack(List<Item> items, Integer maxWeight, Integer id) {
+	public Knapsack(List<Item> items, Integer maxWeight) {
 		this.items = items;
 		this.maxWeight = maxWeight;
-		this.id = id;
+		this.dynamicProgrammingMatrix = new Integer[items.size()][maxWeight+1];
+
+		Long startTimer = System.nanoTime();
 		this.solve();
+		this.buildSolution(System.nanoTime() - startTimer);
 	}
 	
 	private void solve() { // O(n*w)
-		Long startTimer = System.nanoTime();
-		
 		// init first column
 		for (int i = 0; i < items.size(); i++){
 			dynamicProgrammingMatrix[i][0] = 0;
@@ -47,8 +47,6 @@ public class Knapsack {
 				}
 			}
 		}
-		
-		this.buildSolution(System.nanoTime() - startTimer);
 	}
 	
 	private Integer max(Integer a, Integer b) {
@@ -58,18 +56,18 @@ public class Knapsack {
 	private void buildSolution(Long time) {
 		BitSet selected = new BitSet(items.size());
 		
-		Integer w = maxWeight + 1;
-		for (int i = items.size()-1; i >= 0; i--){
+		Integer w = maxWeight;
+		for (int i = items.size()-1; i > 0; i--){
 			if (!dynamicProgrammingMatrix[i][w].equals(dynamicProgrammingMatrix[i-1][w])) {
 				selected.set(i);
 				w -= items.get(i).getWeight();
 			}
 		}
 		
-		this.solution = new KnapsackSolution(selected, dynamicProgrammingMatrix[items.size()][maxWeight+1], time);
+		this.solution = new KnapsackSolution(selected, dynamicProgrammingMatrix[items.size()-1][maxWeight], time);
 	}
 	
-	private KnapsackSolution getSolution() {
+	public KnapsackSolution getSolution() {
 		return this.solution;
 	}
 	
