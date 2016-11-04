@@ -8,12 +8,13 @@ public class Knapsack {
 	private List<Item> items;
 	private Integer maxWeight;
 	private KnapsackSolution solution;
-	//Must include maxWeight
+
 	private Integer[][] dynamicProgrammingMatrix;
 	
 	public Knapsack(List<Item> items, Integer maxWeight) {
 		this.items = items;
 		this.maxWeight = maxWeight;
+		//Must include maxWeight
 		this.dynamicProgrammingMatrix = new Integer[items.size()][maxWeight+1];
 
 		Long startTimer = System.nanoTime();
@@ -32,7 +33,7 @@ public class Knapsack {
 			if (w < items.get(0).getWeight()) {
 				dynamicProgrammingMatrix[0][w] = 0;
 			} else {
-				dynamicProgrammingMatrix[0][w] = items.get(0).getWeight();
+				dynamicProgrammingMatrix[0][w] = items.get(0).getValue();
 			}
 		}
 		
@@ -43,14 +44,10 @@ public class Knapsack {
 				if (w < currentWeight){
 					dynamicProgrammingMatrix[i][w] = dynamicProgrammingMatrix[i-1][w];
 				} else {
-					dynamicProgrammingMatrix[i][w] = this.max(currentValue + dynamicProgrammingMatrix[i-1][w-currentWeight], dynamicProgrammingMatrix[i-1][w]);
+					dynamicProgrammingMatrix[i][w] = Math.max(currentValue + dynamicProgrammingMatrix[i-1][w-currentWeight], dynamicProgrammingMatrix[i-1][w]);
 				}
 			}
 		}
-	}
-	
-	private Integer max(Integer a, Integer b) {
-		return (a > b) ? a : b;
 	}
 	
 	private void buildSolution(Long time) {
