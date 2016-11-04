@@ -13,4 +13,8 @@ public class FordFulkerson {
 
     }
 
+    private FlowNetwork getNetwork() {
+        return this.network;
+    }
+
 }

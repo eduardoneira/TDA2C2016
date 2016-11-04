@@ -46,5 +46,9 @@ public class FlowNetworkParser {
         }
 
     }
+
+    public FordFulkerson getAlgorithm() {
+        return this.algorithm;
+    }
 	
 }
