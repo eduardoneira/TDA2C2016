@@ -1,4 +1,4 @@
-package dynamicProgramming;
+package knapsack;
 
 public class Item {
 	

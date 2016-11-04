@@ -1,4 +1,4 @@
-package dynamicProgramming;
+package knapsack;
 
 import java.util.BitSet;
 import java.util.List;

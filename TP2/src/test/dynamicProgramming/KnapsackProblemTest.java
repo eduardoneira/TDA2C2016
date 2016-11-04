@@ -7,7 +7,9 @@ import java.util.BitSet;
 
 import org.junit.Test;
 
-
+import knapsack.Knapsack;
+import knapsack.KnapsackParser;
+import knapsack.KnapsackSolution;
 import utils.Directory;
 
 public class KnapsackProblemTest {
