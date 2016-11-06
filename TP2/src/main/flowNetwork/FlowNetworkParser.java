@@ -36,7 +36,7 @@ public class FlowNetworkParser {
                 String[] splited = parser.readLine().split(" ");
                 network.connectToSink(1+N+i,Integer.parseInt(splited[0]));
 
-                for ( int j = 1; i < splited.length; j++) {
+                for ( int j = 1; j < splited.length; j++) {
                     Integer src = 1 + Integer.parseInt(splited[j]); // De nuevo tengo el source en cuenta
                     network.agregarArista(src,node,Integer.MAX_VALUE);
                 }

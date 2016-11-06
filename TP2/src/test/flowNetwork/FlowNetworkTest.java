@@ -2,6 +2,7 @@ package flowNetwork;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
@@ -9,7 +10,7 @@ import static org.junit.Assert.fail;
  */
 public class FlowNetworkTest {
 
-    private static final String PATHDIRECTORY = "resources/flowNetwork/";
+    private static final String PATHDIRECTORY = "TDA2C2016/resources/flowNetwork/";
 
     @Test
     public void parserTest() {
@@ -17,6 +18,10 @@ public class FlowNetworkTest {
             String file = "example.txt";
             FlowNetworkParser parser = new FlowNetworkParser(PATHDIRECTORY + file);
 
+            FlowNetwork network = parser.getAlgorithm().getNetwork();
+
+            assertEquals(network.n(), 7);
+            assertEquals(network.m(), 8);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Funca mal vieja no deberia pinchar");

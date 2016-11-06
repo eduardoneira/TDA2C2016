@@ -2,7 +2,7 @@ package flowNetwork;
 
 public class FordFulkerson {
 
-    public FlowNetwork network;
+    private FlowNetwork network;
 
     public FordFulkerson(FlowNetwork network) {
         this.network = network;
@@ -13,7 +13,7 @@ public class FordFulkerson {
 
     }
 
-    private FlowNetwork getNetwork() {
+    public FlowNetwork getNetwork() {
         return this.network;
     }
 
