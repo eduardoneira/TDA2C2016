@@ -33,4 +33,20 @@ public class ProjectSelectionTest {
         }
     }
     
+    @Test
+    public void testingFileTest() {
+        try {
+            String file = "testing.txt";
+            ProjectSelectionParser parser = new ProjectSelectionParser(PATHDIRECTORY + file);
+                        
+            FlowNetwork network = parser.getAlgorithm().getNetwork();
+            
+            assertEquals(parser.maxProfit(), new Integer(21));            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Funca mal vieja no deberia pinchar");
+        }
+    }
+    
 }
