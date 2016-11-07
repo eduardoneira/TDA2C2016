@@ -1,6 +1,9 @@
 
 package flowNetwork;
 
+import java.util.Set;
+
+import grafos.Arista;
 import grafos.Digrafo;
 
 public class FlowNetwork extends Digrafo {
@@ -21,5 +24,18 @@ public class FlowNetwork extends Digrafo {
 	public void connectToSink(Integer node, Integer capacity) {
 		this.agregarArista(node,this.sink,capacity);
 	}
+	
+	public Set<Arista> edgesFromSource() {
+		return this.adyacentEdges.get(this.source);
+	}
+	
+	public Integer getSource() {
+		return source;
+	}
+
+	public Integer getSink() {
+		return sink;
+	}
+	
 
 }
