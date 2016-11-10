@@ -21,18 +21,15 @@ public class TravellingSalesman {
 	
 	//Voy a usar una lista de maps para guardar todo lindo, medio pesado pero la verdad que es jodido. Además de eso uso un mask para tener una key en los maps
 	List<Map<Long,Integer>> minDistanceDP;
-	
-	private final Long vMask; 
-	
+		
 	public TravellingSalesman(Integer[][] costs, Integer v0) {
 		this.costs = costs;
-		this.v0 = v0-1; // resto uno asi tiene sentido con las estructuras
+		this.v0 = v0 - 1; // resto uno asi tiene sentido con las estructuras
 		this.V = costs.length;
 		this.minPath = new ArrayList<>();
 		this.minDistanceDP = new ArrayList<>(this.V);
 		
-		this.vMask = (long) Math.pow(2, this.V); 
-		long mask =  this.vMask - 1;
+		long mask =  (long) Math.pow(2, this.V) - 1;
 		
 		Set<Integer> S = new HashSet<>();
 		
@@ -59,8 +56,8 @@ public class TravellingSalesman {
 			for (Integer u : S) {
 				Set<Integer> S_u = new HashSet<Integer>(S);
 				S_u.remove(u);
+				
 				long mask_u = mask & ~(1 << u);
-				//mask_u = u * vMask + mask_u;
 				
 				Integer distance_u;
 				
@@ -91,7 +88,6 @@ public class TravellingSalesman {
 				S_u.remove(u);
 				
 				long mask_u = mask & ~(1 << u);
-				//mask_u = u * vMask + mask_u;
 				
 				Integer uDistance = minDistanceDP.get(u).get(mask_u); // Siempre me tiene que traer distinto de null
 				
