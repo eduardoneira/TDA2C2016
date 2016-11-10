@@ -19,7 +19,7 @@ public class TravellingSalesman {
 	
 	Integer minDistance;
 	
-	//La key del map es v*2^(N+1)+ mask
+	//Voy a usar una lista de maps para guardar todo lindo, medio pesado pero la verdad que es jodido. Además de eso uso un mask para tener una key en los maps
 	List<Map<Long,Integer>> minDistanceDP;
 	
 	private final Long vMask; 
@@ -102,7 +102,7 @@ public class TravellingSalesman {
 			}
 			
 			minPath.add(next+1);
-			// Actualizo para el siguiente nodo
+			// Actualizo para el siguiente vertice
 			v = next;
 			S.remove(next);
 			mask &= ~(1 << next);
@@ -113,9 +113,11 @@ public class TravellingSalesman {
 	
 	public Integer recalculateMinDistance() { // O(V)
 		Integer distance = 0;
+		
 		for (int i = 1; i < this.minPath.size() ; i++) {
 			distance += this.costs[this.minPath.get(i)-1][this.minPath.get(i-1)-1];
 		}
+		
 		return distance;
 	}
 }
