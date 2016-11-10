@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class TravellingSalesman {
 	
@@ -18,55 +19,103 @@ public class TravellingSalesman {
 	
 	Integer minDistance;
 	
-	Map<Long,Integer> minDistanceDP;
+	//La key del map es v*2^(N+1)+ mask
+	List<Map<Long,Integer>> minDistanceDP;
+	
+	private final Long vMask; 
 	
 	public TravellingSalesman(Integer[][] costs, Integer v0) {
 		this.costs = costs;
-		this.v0 = v0;
+		this.v0 = v0-1; // resto uno asi tiene sentido con las estructuras
 		this.V = costs.length;
 		this.minPath = new ArrayList<>();
-		this.minDistanceDP = new HashMap<>();
+		this.minDistanceDP = new ArrayList<>(this.V);
 		
-		long mask = (long) Math.pow(2, this.V+1) - 1;
-		HashSet<Integer> S = new HashSet<>();
+		this.vMask = (long) Math.pow(2, this.V); 
+		long mask =  this.vMask - 1;
 		
-		for (Integer i = 1; i <= this.V; i++) {
-			if(i.equals(v0)) {
+		Set<Integer> S = new HashSet<>();
+		
+		for (Integer i = 0; i < this.V; i++) {
+			if(i.equals(this.v0)) {
 				mask &= ~(1 << i);
+			} else {
+				S.add(i);
 			}
-			S.add(i);
+			this.minDistanceDP.add(new HashMap<>());
 		}
 		
-		this.minDistance = this.bellamFord(v0, mask,S);		
+		this.minDistance = this.heldKarp(this.v0,mask,S);
+		this.buildPath(mask, S);
+		
 	}
 	
-	@SuppressWarnings("unchecked")
-	private Integer bellamFord(Integer v, long mask, HashSet<Integer> S){
-		if (S.size() == 0) {
-			return costs[v][v0];
+	private Integer heldKarp(Integer v, long mask, Set<Integer> S) { // le agrego un parametro más para poder acceder al Map en O(1)
+		if (S.size() == 0) {			
+			return costs[v0][v];			
 		} else {
 			Integer min = Integer.MAX_VALUE;
 
 			for (Integer u : S) {
-				HashSet<Integer> S_u = (HashSet<Integer>) S.clone();
+				Set<Integer> S_u = new HashSet<Integer>(S);
 				S_u.remove(u);
 				long mask_u = mask & ~(1 << u);
-				//Falta definir como entrar al map, tengo que hacer una clase id
-				min = Math.min(min, costs[v][u] + bellamFord(u,mask_u,S_u));
+				//mask_u = u * vMask + mask_u;
+				
+				Integer distance_u;
+				
+				if ((distance_u = minDistanceDP.get(u).get(mask_u)) == null ) {
+					distance_u = heldKarp(u,mask_u,S_u);
+					minDistanceDP.get(u).put(mask_u, distance_u);
+				}
+				
+				min = Math.min(min, costs[u][v] + distance_u);
 			}
+			
 			return min;
 		}
 	}
 	
-	private String serializeSet(HashSet<Integer> S){ // O(V)
-		StringBuilder sb = new StringBuilder("");
-		for (Integer elem : S)  {
-			sb.append(elem);
+	private void buildPath(long mask, Set<Integer> S) { // O(V*(V-1) /2) = O(V^2)
+		
+		minPath.add(v0 +1);
+		
+		Integer v = v0;
+		
+		while ( !S.isEmpty() ) {
+			Integer min = Integer.MAX_VALUE;
+			Integer next = v0; // Inicializo con cualquier bosta
+			
+			for (Integer u : S) {
+				Set<Integer> S_u = new HashSet<Integer>(S);
+				S_u.remove(u);
+				
+				long mask_u = mask & ~(1 << u);
+				//mask_u = u * vMask + mask_u;
+				
+				Integer uDistance = minDistanceDP.get(u).get(mask_u); // Siempre me tiene que traer distinto de null
+				
+				if ( min > costs[u][v] + uDistance){ // Si la distancia es la menor encontramos a cual era el siguiente
+					next = u;
+					min = costs[u][v] + uDistance;
+				}
+			}
+			
+			minPath.add(next+1);
+			// Actualizo para el siguiente nodo
+			v = next;
+			S.remove(next);
+			mask &= ~(1 << next);
 		}
-		return sb.toString();
+		
+		minPath.add(v0+1);
 	}
 	
-	private String serializeKey(Integer v, HashSet<Integer> S) {
-		return String.valueOf(v)+serializeSet(S);
+	public Integer recalculateMinDistance() { // O(V)
+		Integer distance = 0;
+		for (int i = 1; i < this.minPath.size() ; i++) {
+			distance += this.costs[this.minPath.get(i)-1][this.minPath.get(i-1)-1];
+		}
+		return distance;
 	}
 }

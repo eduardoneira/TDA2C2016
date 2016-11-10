@@ -1,0 +1,14 @@
+Vertice de Salida
+1
+Cantidad de Vertices
+4
+Costos
+0 2 9 10
+1 0 6 4
+15 7 0 8
+6 3 12 0
+Solucion
+1
+2
+4
+3
