@@ -41,7 +41,7 @@ public class ProjectSelectionTest {
                         
             FlowNetwork network = parser.getAlgorithm().getNetwork();
             
-            assertEquals(parser.maxProfit(), new Integer(21));            
+            assertEquals(parser.maxProfit(), new Integer(10));            
 
         } catch (Exception e) {
             e.printStackTrace();
