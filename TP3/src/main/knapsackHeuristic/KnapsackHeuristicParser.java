@@ -34,6 +34,7 @@ public class KnapsackHeuristicParser {
 		this.parseFile(path,testCase,epsilon);		
 	}
 	
+	//Arreglar con https://github.com/madcat1991/knapsack/blob/master/fptas.py
 	private void parseFile(String path, Integer testCase, double epsilon) throws FileNotFoundException, IOException {
 		
 		Parser file = new FileReader(path);
