@@ -15,9 +15,9 @@ public class TravellingSalesman {
 	
 	private Integer v0;
 	
-	List<Integer> minPath;
+	private List<Integer> minPath;
 	
-	Integer minDistance;
+	private Integer minDistance;
 	
 	//Voy a usar una lista de maps para guardar todo lindo, medio pesado pero la verdad que es jodido. Además de eso uso un mask para tener una key en los maps
 	List<Map<Long,Integer>> minDistanceDP;
@@ -28,6 +28,8 @@ public class TravellingSalesman {
 		this.V = costs.length;
 		this.minPath = new ArrayList<>();
 		this.minDistanceDP = new ArrayList<>(this.V);
+		
+		long startTimer = System.nanoTime();
 		
 		long mask =  (long) Math.pow(2, this.V) - 1;
 		
@@ -44,6 +46,8 @@ public class TravellingSalesman {
 		
 		this.minDistance = this.heldKarp(this.v0,mask,S);
 		this.buildPath(mask, S);
+		
+		System.out.println(System.nanoTime() - startTimer);
 		
 	}
 	
@@ -115,5 +119,13 @@ public class TravellingSalesman {
 		}
 		
 		return distance;
+	}
+
+	public List<Integer> getMinPath() {
+		return minPath;
+	}
+
+	public Integer getMinDistance() {
+		return minDistance;
 	}
 }

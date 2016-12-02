@@ -62,6 +62,7 @@ public class Knapsack {
 		}
 		
 		this.solution = new KnapsackSolution(selected, dynamicProgrammingMatrix[items.size()-1][maxWeight], time);
+		System.out.println("Problema resuelto en "+this.solution.getTime()+" para mochila de peso "+this.maxWeight+" con "+this.items.size()+" items");
 	}
 	
 	public KnapsackSolution getSolution() {

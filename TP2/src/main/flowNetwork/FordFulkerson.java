@@ -24,7 +24,7 @@ public class FordFulkerson {
 	    	
 	    	Arista[] pred = new Arista[network.n()];
 	    	
-	    	while (!queue.isEmpty()) { // O(E+V)
+	    	while (!queue.isEmpty()) { //
 	    		Integer current = queue.poll();
 	    		
 				for (Arista edge : network.aristasAdyacentes(current)){
@@ -41,11 +41,11 @@ public class FordFulkerson {
 	    	
 	    	Integer df = Integer.MAX_VALUE;
 	    	
-	    	for (Arista edge = pred[network.getSink()]; edge != null; edge = pred[edge.getSrc()]) { // O(V)
+	    	for (Arista edge = pred[network.getSink()]; edge != null; edge = pred[edge.getSrc()]) {
 	    		df = Math.min(df, edge.getCapacity() - edge.getFlow());
 	    	}
 	    	
-	    	for (Arista edge = pred[network.getSink()]; edge != null; edge = pred[edge.getSrc()]) { // O(V)
+	    	for (Arista edge = pred[network.getSink()]; edge != null; edge = pred[edge.getSrc()]) { 
 	    		edge.setFlow(edge.getFlow() + df);
 	    	}
 	    	

@@ -41,7 +41,7 @@ public class ProjectSelectionParser {
             FlowNetwork network = new FlowNetwork(N+M+2);
 
             for (int i = 0; i < N; i++) {
-                Integer node = i+1; // Tengo que sumar el source TODO: ver como sacar hardcodeo
+                Integer node = i+1; // Tengo que sumar el source 
                 network.connectToSink(node,Integer.parseInt(parser.readLine()));
             }
 
@@ -75,6 +75,7 @@ public class ProjectSelectionParser {
             	}
             }
             
+            //Reviso si no lo contiene actualmente
             for ( int i = 0; i < projects.size(); i++) {
             	Set<Integer> s = projects.get(i);
             	boolean elegido = true;
@@ -92,8 +93,7 @@ public class ProjectSelectionParser {
               		maxProfit += edge.getCapacity() - edge.getFlow();
             	}
             	
-            }
-            
+            } 
             
        }
 
