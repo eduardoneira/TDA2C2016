@@ -35,30 +35,22 @@ public class KnapsackHeuristic {
 	private void solve() {
 
 		for (int i = 0; i <= items.size(); i++){
-			dynamicProgrammingMatrix[i][0] = 0;
+			dynamicProgrammingMatrix[i][0] = Integer.MAX_VALUE;
 		}
 		
 		for (int i = 0; i <= sumOfValues; i++){
-			dynamicProgrammingMatrix[0][i] = 0;
+			dynamicProgrammingMatrix[0][i] = Integer.MAX_VALUE;
 		}
-		
-		Integer sumValuesUpToItem = 0;
 		
 		for (int i = 1; i <= items.size(); i++) {
 			Integer currentWeight = items.get(i).getWeight();
-			Integer currentValue = items.get(i).getValue();
-			
-			sumValuesUpToItem += currentValue;
-			
-			for (int v = 1; v <= sumValuesUpToItem; v++) {				
-				if (v < sumValuesUpToItem){
+			Integer currentValue = items.get(i).getValue();			
+				
+			for (int v = 1; v <= sumOfValues; v++) {				
+				if (v < sumOfValues){
 					dynamicProgrammingMatrix[i][v] = currentWeight + dynamicProgrammingMatrix[i-1][v];
 				} else {
-					if (i == 1)
-						dynamicProgrammingMatrix[i][v] = Math.min(dynamicProgrammingMatrix[i-1][v], currentWeight + dynamicProgrammingMatrix[i-1][Math.max(0, v - currentValue)]);
-					else {
-						dynamicProgrammingMatrix[i][v] = Math.min(dynamicProgrammingMatrix[i-1][v], currentWeight + dynamicProgrammingMatrix[i-1][Math.max(0, v - currentValue)]);
-					}
+					dynamicProgrammingMatrix[i][v] = Math.min(dynamicProgrammingMatrix[i-1][v], currentWeight + dynamicProgrammingMatrix[i-1][Math.max(0, v - currentValue)]);
 				}
 			}
 		}

@@ -14,17 +14,17 @@ import utils.Parser;
 
 public class KnapsackHeuristicParser {
 	
-	private List<Knapsack> knapsacks;
+	private List<KnapsackHeuristic> knapsacks;
 	
 	private List<KnapsackSolution> solutions;
 	
 	private static final Integer ALLTESTCASES = 0;
 
-	public KnapsackHeuristicParser(String path) throws FileNotFoundException, IOException {
+	public KnapsackHeuristicParser(String path,double epsilon) throws FileNotFoundException, IOException {
 		super();		
 		this.knapsacks = new ArrayList<>();
 		this.solutions = new ArrayList<>();
-		this.parseFile(path,ALLTESTCASES);		
+		this.parseFile(path,ALLTESTCASES,epsilon);		
 	}
 	
 	public KnapsackHeuristicParser(String path, Integer testCase, double epsilon) throws FileNotFoundException, IOException {
@@ -66,7 +66,7 @@ public class KnapsackHeuristicParser {
 			
 			//Agrego porque es el testCase o porque quiero a todos los testcases
 			if (currentTestCase.equals(testCase) || testCase.equals(ALLTESTCASES)) {
-				knapsacks.add(new Knapsack(items, cInt));
+				knapsacks.add(new KnapsackHeuristic(items, cInt));
 				solutions.add(new KnapsackSolution(selected, Integer.parseInt(z[1]), time[1]));
 				
 				if (currentTestCase.equals(testCase)) {
@@ -84,11 +84,11 @@ public class KnapsackHeuristicParser {
 		file.close();
 	}
 	
-	public Knapsack getKnapsack(Integer id) {
+	public KnapsackHeuristic getKnapsack(Integer id) {
 		return this.knapsacks.get(id);
 	}
 	
-	public List<Knapsack> getAllKnapsacks() {
+	public List<KnapsackHeuristic> getAllKnapsacks() {
 		return this.knapsacks;
 	}
 	
