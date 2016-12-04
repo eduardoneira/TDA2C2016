@@ -3,10 +3,12 @@ package knapsackHueristic;
 import static org.junit.Assert.*;
 
 import java.util.BitSet;
+import java.util.List;
 
 import org.junit.Test;
 
 import knapsack.KnapsackSolution;
+import knapsackHeuristic.KnapsackHeuristic;
 import knapsackHeuristic.KnapsackHeuristicParser;
 
 public class KnapsackHeuristicTest {
@@ -18,26 +20,43 @@ public class KnapsackHeuristicTest {
 	
 	private final static String pathHardExamples = "resources/knapsackHard/";
 	
-	@Test
-	public void testSmallInput() {
-		try {
-			final String filename = "knap_izi.csv";
-			
-			KnapsackHeuristicParser parser = new KnapsackHeuristicParser(pathEssential + filename, 0.9);
-			
+//	@Test
+//	public void testSmallInput() {
+//		try {
+//			final String filename = "knap_izi.csv";
+//			
+//			KnapsackHeuristicParser parser = new KnapsackHeuristicParser(pathEssential + filename, 0.9);
+//			
 //			KnapsackSolution solution = parser.getKnapsack(0).getSolution();
 //			
-//			assertEquals(solution.getBestValue(), new Integer(90));
+//			assertEquals(solution.getBestValue(), new Integer(9));
 //			
 //			// Bitset solucion
-//			BitSet resultBitSet = new BitSet(4);
-//			resultBitSet.set(1);
-//			resultBitSet.set(3);
+//			BitSet resultBitSet = new BitSet();
+//			resultBitSet.set(2);
+//			resultBitSet.set(4);
 //			
 //			assertEquals(solution.getSelected(),resultBitSet);
-//			assertEquals(solution.getTime(),"0.00");
-			System.out.println("hola");
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			fail("Hubo una excepción, se rompe todo");
+//		}
+//	}
+	
+	@Test
+	public void testSmallCoefficient() {
+		try {
+			final String filename = "knapPI_1_50_1000.csv";
+			KnapsackHeuristicParser parser = new KnapsackHeuristicParser(pathEssential + filename,0.9);
 			
+			List<KnapsackSolution> solutions = parser.getAllSolutions();
+			List<KnapsackHeuristic> knapsacks = parser.getAllKnapsacks();
+			
+			for (int i = 0; i < solutions.size(); i++) {
+				assertEquals(solutions.get(i).getBestValue(),knapsacks.get(i).getSolution().getBestValue());
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Hubo una excepción, se rompe todo");

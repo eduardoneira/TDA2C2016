@@ -34,7 +34,6 @@ public class KnapsackHeuristicParser {
 		this.parseFile(path,testCase,epsilon);		
 	}
 	
-	//Arreglar con https://github.com/madcat1991/knapsack/blob/master/fptas.py
 	private void parseFile(String path, Integer testCase, double epsilon) throws FileNotFoundException, IOException {
 		
 		Parser file = new FileReader(path);
@@ -47,7 +46,7 @@ public class KnapsackHeuristicParser {
 			String[] z = file.readLine().split(" ");		//Valor óptimo 
 			String[] time = file.readLine().split(" ");		//Tiempo 
 			
-			Integer cInt = (int) ((double) Integer.parseInt(c[1]) / epsilon);
+			Integer cInt = Integer.parseInt(c[1]);
 			
 			Integer N = Integer.parseInt(n[1]);
 			List<Item> items = new ArrayList<>(N);
@@ -56,8 +55,8 @@ public class KnapsackHeuristicParser {
 			for(int i = 0; i < N; i++) {
 				String[] values = file.readLine().split(",");
 				
-				items.add(new Item(Integer.parseInt(values[1]), (int) Math.ceil(Double.parseDouble(values[2]) /epsilon)));
-				
+				//items.add(new Item(Integer.parseInt(values[1]), (int) Math.ceil(Double.parseDouble(values[2]) /epsilon)));
+				items.add(new Item(Integer.parseInt(values[1]), Integer.parseInt((values[2]))));
 				if(values[3].equals("1")) {
 					selected.set(i);
 				}

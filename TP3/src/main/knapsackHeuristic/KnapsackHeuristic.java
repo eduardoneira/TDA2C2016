@@ -13,7 +13,7 @@ public class KnapsackHeuristic {
 	private Integer sumOfValues;
 	private KnapsackSolution solution;
 
-	private Integer[][] dynamicProgrammingMatrix;
+	private int[][] dynamicProgrammingMatrix;
 	
 	public KnapsackHeuristic(List<Item> items, Integer maxWeight) {
 		this.items = items;
@@ -25,51 +25,81 @@ public class KnapsackHeuristic {
 			this.sumOfValues += item.getValue();
 		}
 		
-		this.dynamicProgrammingMatrix = new Integer[items.size()+1][sumOfValues+1];
+		this.dynamicProgrammingMatrix = new int[items.size()+1][sumOfValues+1];
 
 		Long startTimer = System.nanoTime();
 		this.solve();
-		this.buildSolution(System.nanoTime() - startTimer);
+		long finalTime = System.nanoTime() - startTimer;
+		System.out.println("Tardo "+finalTime);
+		this.buildSolution(finalTime);
 	}
+	
+	
+	// Algoritmo de http://math.mit.edu/~goemans/18434S06/knapsack-katherine.pdf
+//	private void solve() {
+//
+//		dynamicProgrammingMatrix[0][items.get(0).getValue()] = items.get(0).getWeight();
+//
+//		for (int i = 1; i < items.size(); i++) {
+//			Integer currentWeight = items.get(i).getWeight();
+//			Integer currentValue = items.get(i).getValue();
+//			
+//			for (int v = 0; v <= sumOfValues; v++) {				
+//				if (v >= currentValue){					
+//					dynamicProgrammingMatrix[i][v] = Math.min(this.getFromDP(i-1, v), this.getFromDP(i-1, v - currentValue,currentWeight ));
+//				} else {
+//					dynamicProgrammingMatrix[i][v] = this.getFromDP(i-1, v);
+//				}
+//			}
+//		}
+//	}
+//	private Integer getFromDP(Integer i,Integer j){
+//	return (dynamicProgrammingMatrix[i][j] == null) ? Integer.MAX_VALUE : dynamicProgrammingMatrix[i][j];
+//}
+//
+//private Integer getFromDP(Integer i,Integer j,Integer currentWeight){
+//	return (dynamicProgrammingMatrix[i][j] == null || dynamicProgrammingMatrix[i][j].equals(Integer.MAX_VALUE)) ? Integer.MAX_VALUE : dynamicProgrammingMatrix[i][j] + currentWeight;
+//}
 	
 	private void solve() {
 
-		for (int i = 0; i <= items.size(); i++){
-			dynamicProgrammingMatrix[i][0] = Integer.MAX_VALUE;
-		}
+		Integer max = 0;
 		
-		for (int i = 0; i <= sumOfValues; i++){
-			dynamicProgrammingMatrix[0][i] = Integer.MAX_VALUE;
-		}
-		
-		for (int i = 1; i <= items.size(); i++) {
-			Integer currentWeight = items.get(i).getWeight();
-			Integer currentValue = items.get(i).getValue();			
-				
-			for (int v = 1; v <= sumOfValues; v++) {				
-				if (v < sumOfValues){
-					dynamicProgrammingMatrix[i][v] = currentWeight + dynamicProgrammingMatrix[i-1][v];
+		for (int i = 1; i <= items.size();i++){
+			int currentWeight = items.get(i-1).getWeight();
+			int currentValue = items.get(i-1).getValue();
+			
+			for (int v = 1; v <= max+currentValue; v++){
+				if (v > max) {
+					this.dynamicProgrammingMatrix[i][v] = currentWeight + this.dynamicProgrammingMatrix[i-1][Math.max(0, v-currentValue)];
 				} else {
-					dynamicProgrammingMatrix[i][v] = Math.min(dynamicProgrammingMatrix[i-1][v], currentWeight + dynamicProgrammingMatrix[i-1][Math.max(0, v - currentValue)]);
+					this.dynamicProgrammingMatrix[i][v] = Math.min(dynamicProgrammingMatrix[i-1][v], currentWeight+ dynamicProgrammingMatrix[i-1][Math.max(0, v-currentValue)]);
 				}
 			}
+			
+			max += currentValue;
+			
 		}
 	}
-	
+
 	private void buildSolution(Long time) {
-		BitSet selected = new BitSet(items.size());
+		Integer bestValue = null;
+		BitSet bitset = new BitSet();
 		
-		Integer max = this.sumOfValues;
-		for (int i = items.size(); i > 0; i--){
-			if (!dynamicProgrammingMatrix[i][max].equals(dynamicProgrammingMatrix[i-1][max])) {
-				selected.set(i);
-				max -= items.get(i).getValue();
+		for (int j = this.sumOfValues; j >= 0; j--){
+			if (this.dynamicProgrammingMatrix[this.items.size()][j] <= this.maxWeight && bestValue == null){
+					bestValue = j;
+					for (int i = this.items.size(); i > 0; i--) {
+						if (this.dynamicProgrammingMatrix[i][j] != this.dynamicProgrammingMatrix[i-1][j]){
+							bitset.set(i);
+							j-=items.get(i-1).getValue();
+						}
+					}
+					break;
 			}
 		}
 		
-		this.solution = new KnapsackSolution(selected, dynamicProgrammingMatrix[items.size()][max], time);
-		System.out.println("Problema resuelto en "+this.solution.getTime()+" para mochila de peso "+this.maxWeight+" con "+this.items.size()+" items"+" y value " + this.solution.getBestValue());
-		System.out.println("Sumatoria de Values :" + this.sumOfValues);
+		this.solution = new KnapsackSolution(bitset, bestValue, time);
 	}
 	
 	public KnapsackSolution getSolution() {
