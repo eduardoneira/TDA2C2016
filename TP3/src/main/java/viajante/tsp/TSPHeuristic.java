@@ -20,7 +20,7 @@ public class TSPHeuristic {
 		distance = 0;
 		this.g= g;
 		
-		//Un vertice de g (se que todos tienen un vertice 0)
+		//Tomo el vertice 0 del grafo como root.
 		TreeNode root = new TreeNode(0);
 		
 		MSTGenerator mstGenerator = new MSTGenerator();

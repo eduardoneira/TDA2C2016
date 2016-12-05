@@ -71,7 +71,8 @@ public class TravellingSalesmanParser {
 		file.readLine(); // Leo algo al dope
 		
 		for (int i = 0; i < N; i++) {
-			this.minPath.add(Integer.parseInt(file.readLine().trim()));
+			String line = file.readLine().trim();
+			this.minPath.add(Integer.parseInt(line));
 			if (i > 0) {
 				this.distance += g.arista(this.minPath.get(i)-1, this.minPath.get(i-1)-1).getWeight();
 			}
