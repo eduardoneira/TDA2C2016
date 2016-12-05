@@ -1,6 +1,7 @@
 package utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -11,7 +12,11 @@ public class FileReader implements Parser {
 	
 	public FileReader(String path) throws FileNotFoundException {
 		super();
-		this.bf = new BufferedReader(new java.io.FileReader(path));
+		ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource(path).getFile());
+
+		this.bf = new BufferedReader(new java.io.FileReader(file));
+		
 	}
 
 	@Override

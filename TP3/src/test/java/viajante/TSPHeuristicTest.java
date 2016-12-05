@@ -16,8 +16,12 @@ public class TSPHeuristicTest {
 	 
 	 private static final String BIG_TEST_FILE = "example26.txt";
 	 
+	 private long start;
 	 
 	 private void tspTest(String file){
+		start = System.nanoTime();
+		 
+		 
 		try {
 			TravellingSalesmanParser parser = new TravellingSalesmanParser(PATHDIRECTORY + file);
 
@@ -28,7 +32,10 @@ public class TSPHeuristicTest {
 			System.out.println("Heuristic min distance: " + aproxSol);
 
 			assertTrue(aproxSol <= 2 * optimalSol);
-
+			
+			System.out.println("Tiempo de ejecucion:" + (System.nanoTime() - start));
+			System.out.println("");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Funca mal  no deberia pinchar");
