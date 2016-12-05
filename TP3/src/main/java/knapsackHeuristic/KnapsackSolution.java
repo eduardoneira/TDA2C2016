@@ -1,4 +1,4 @@
-package knapsack;
+package knapsackHeuristic;
 
 import java.util.BitSet;
 

@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
-import knapsack.Item;
-import knapsack.KnapsackSolution;
-
 public class KnapsackHeuristic {
 	
 	private List<Item> items;
@@ -61,31 +58,6 @@ public class KnapsackHeuristic {
 	
 	
 	// Algoritmo de http://math.mit.edu/~goemans/18434S06/knapsack-katherine.pdf
-//	private void solve() {
-//
-//		dynamicProgrammingMatrix[0][items.get(0).getValue()] = items.get(0).getWeight();
-//
-//		for (int i = 1; i < items.size(); i++) {
-//			Integer currentWeight = items.get(i).getWeight();
-//			Integer currentValue = items.get(i).getValue();
-//			
-//			for (int v = 0; v <= sumOfValues; v++) {				
-//				if (v >= currentValue){					
-//					dynamicProgrammingMatrix[i][v] = Math.min(this.getFromDP(i-1, v), this.getFromDP(i-1, v - currentValue,currentWeight ));
-//				} else {
-//					dynamicProgrammingMatrix[i][v] = this.getFromDP(i-1, v);
-//				}
-//			}
-//		}
-//	}
-//	private Integer getFromDP(Integer i,Integer j){
-//	return (dynamicProgrammingMatrix[i][j] == null) ? Integer.MAX_VALUE : dynamicProgrammingMatrix[i][j];
-//}
-//
-//private Integer getFromDP(Integer i,Integer j,Integer currentWeight){
-//	return (dynamicProgrammingMatrix[i][j] == null || dynamicProgrammingMatrix[i][j].equals(Integer.MAX_VALUE)) ? Integer.MAX_VALUE : dynamicProgrammingMatrix[i][j] + currentWeight;
-//}
-	
 	private void solve() {
 
 		Integer max = 0;

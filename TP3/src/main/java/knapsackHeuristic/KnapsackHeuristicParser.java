@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
-import knapsack.Item;
 import knapsack.Knapsack;
-import knapsack.KnapsackSolution;
 import utils.FileReader;
 import utils.Parser;
 

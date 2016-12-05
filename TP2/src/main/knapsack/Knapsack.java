@@ -3,6 +3,9 @@ package knapsack;
 import java.util.BitSet;
 import java.util.List;
 
+import knapsackHeuristic.Item;
+import knapsackHeuristic.KnapsackSolution;
+
 public class Knapsack {
 	
 	private List<Item> items;

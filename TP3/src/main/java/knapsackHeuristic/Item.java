@@ -1,4 +1,4 @@
-package knapsack;
+package knapsackHeuristic;
 
 public class Item {
 	
