@@ -14,22 +14,26 @@ public class MSTGenerator {
 
 	private static Double INFINITY = Double.POSITIVE_INFINITY;
 	
-	private Map<TreeNode, Double> distanceToMST;
+	private Map<Integer, Double> distanceToMST;
 	
 	//heap que devuelve el nodo mas cercano al MST
-	private Queue<TreeNode> minHeap;
+	private Queue<Integer> minHeap;
 	
+	private Map<Integer, Integer> parents;
+	private Map<Integer, Set<Integer>> childs;
 	
 	public MSTGenerator(){
-		distanceToMST = new HashMap<TreeNode, Double>();
+		distanceToMST = new HashMap<Integer, Double>();
+		parents = new HashMap<Integer, Integer>();
+		childs = new HashMap<Integer, Set<Integer>>();
+		
 	}
 	
 	public void primMST(Digrafo g, TreeNode root){
-		Set<TreeNode> mst = new HashSet<TreeNode>();
 		
-		minHeap = new PriorityQueue<TreeNode>(new Comparator<TreeNode>() {
+		minHeap = new PriorityQueue<Integer>(new Comparator<Integer>() {
 			@Override
-			public int compare(TreeNode u, TreeNode v) {
+			public int compare(Integer u, Integer v) {
 				if (distanceToMST.get(u) < distanceToMST.get(v)){
 					return -1;
 				} else if (distanceToMST.get(u) > distanceToMST.get(v)){
@@ -41,32 +45,48 @@ public class MSTGenerator {
 		});
 		
 		for (Integer u : g.v()){
-			TreeNode node = new TreeNode(u);
-			node.setParent(null);
-			updateDistanceToMST(node, INFINITY);
+			childs.put(u, new HashSet<Integer>());
+			parents.put(u, null);
+			updateDistanceToMST(u, INFINITY);
 		}
 		
-		updateDistanceToMST(root, 0d);
+		updateDistanceToMST(root.getId(), 0d);
 		
-		while(mst.size() < g.n()){
-			TreeNode u = minHeap.poll();
-			for (Integer ady : g.adyacentes(u.getId())){
-				TreeNode v = new TreeNode(ady);
-				Integer distUV = g.arista(u.getId(), v.getId()).getWeight();
-				if(!mst.contains(v) && (distUV <  distanceToMST.get(v))){
-					if(v.getParent() != null){
-						v.getParent().getChilds().remove(v);
+		while(!minHeap.isEmpty()){
+			Integer u = minHeap.poll();
+			for (Integer v : g.adyacentes(u)){
+				if(v.equals(u)){
+					//Salteamos la arista incidente sobre el mismo vertice.
+					continue;
+				}
+				Integer distUV = g.arista(u, v).getWeight();
+				if(minHeap.contains(v) && (distUV < distanceToMST.get(v))){
+					if(parents.get(v) != null){
+						childs.get(parents.get(v)).remove(v);
 					}
-					v.setParent(u);
-					u.getChilds().add(v);
+					parents.put(v, u);
+					childs.get(u).add(v);
 					updateDistanceToMST(v, distUV.doubleValue());
 				}
 			}
 		}
 		
+		buildTree(root);
+		
 	}
 	
-	private void updateDistanceToMST(TreeNode node, Double newDistance){
+	private void buildTree(TreeNode root) {
+		for (Integer child : childs.get(root.getId())){
+			TreeNode nodeChild = new TreeNode(child);
+			nodeChild.setParent(root);
+			root.getChilds().add(nodeChild);
+			buildTree(nodeChild);
+		}
+		
+	}
+
+	private void updateDistanceToMST(Integer node, Double newDistance){
+		minHeap.remove(node);
 		distanceToMST.put(node, newDistance);
 		minHeap.add(node);
 	}

@@ -1,6 +1,7 @@
 package utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import viajante.grafo.Digrafo;
@@ -16,6 +17,7 @@ public class TravellingSalesmanParser {
 	
 	public TravellingSalesmanParser(String path) throws IOException {
 		this.distance = 0;
+		this.minPath = new ArrayList<Integer>();
 		this.parseFile(path);
 	}
 	

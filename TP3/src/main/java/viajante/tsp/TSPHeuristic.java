@@ -17,9 +17,10 @@ public class TSPHeuristic {
 	
 	public TSPHeuristic(Digrafo g){
 		path = new ArrayList<Integer>();
+		distance = 0;
 		this.g= g;
 		
-		//Un vertice de g
+		//Un vertice de g (se que todos tienen un vertice 0)
 		TreeNode root = new TreeNode(0);
 		
 		MSTGenerator mstGenerator = new MSTGenerator();
@@ -48,8 +49,8 @@ public class TSPHeuristic {
 		for (Integer v : path){
 			if(previous != null){
 				distance += g.arista(previous, v).getWeight();
-				previous = v;
 			}
+			previous = v;
 		}
 	}
 

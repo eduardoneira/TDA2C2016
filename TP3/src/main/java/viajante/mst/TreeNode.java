@@ -1,5 +1,6 @@
 package viajante.mst;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class TreeNode {
@@ -12,6 +13,7 @@ public class TreeNode {
 	
 	public TreeNode(Integer id){
 		this.id = id;
+		this.childs = new HashSet<TreeNode>();
 	}
 
 	public Integer getId() {
