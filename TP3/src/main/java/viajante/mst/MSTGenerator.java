@@ -56,21 +56,19 @@ public class MSTGenerator {
 		
 		updateDistanceToMST(root.getId(), 0d);
 		
-		while(!minHeap.isEmpty()){
+		while(mst.size() < g.n()){
 			Integer u = minHeap.poll();
-			mst.add(u);
-			for (Integer v : g.adyacentes(u)){
-				if(mst.contains(v)){
-					continue;
-				}
-				Integer distUV = g.arista(u, v).getWeight();
-				if(distUV < distanceToMST.get(v)){
-					if(parents.get(v) != null){
-						childs.get(parents.get(v)).remove(v);
+			if(mst.add(u)){
+				for (Integer v : g.adyacentes(u)){
+					Integer distUV = g.arista(u, v).getWeight();
+					if(!mst.contains(v) && distUV < distanceToMST.get(v)){
+						if(parents.get(v) != null){
+							childs.get(parents.get(v)).remove(v);
+						}
+						parents.put(v, u);
+						childs.get(u).add(v);
+						updateDistanceToMST(v, distUV.doubleValue());
 					}
-					parents.put(v, u);
-					childs.get(u).add(v);
-					updateDistanceToMST(v, distUV.doubleValue());
 				}
 			}
 		}
@@ -90,7 +88,6 @@ public class MSTGenerator {
 	}
 
 	private void updateDistanceToMST(Integer node, Double newDistance){
-		minHeap.remove(node);
 		distanceToMST.put(node, newDistance);
 		minHeap.add(node);
 	}
