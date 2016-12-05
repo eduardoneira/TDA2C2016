@@ -19,11 +19,15 @@ public class MSTGenerator {
 	//heap que devuelve el nodo mas cercano al MST
 	private Queue<Integer> minHeap;
 	
+	//Para saber cuales ya procesamos
+	private Set<Integer> mst;
+	
 	private Map<Integer, Integer> parents;
 	private Map<Integer, Set<Integer>> childs;
 	
 	public MSTGenerator(){
 		distanceToMST = new HashMap<Integer, Double>();
+		mst = new HashSet<Integer>();
 		parents = new HashMap<Integer, Integer>();
 		childs = new HashMap<Integer, Set<Integer>>();
 		
@@ -54,13 +58,13 @@ public class MSTGenerator {
 		
 		while(!minHeap.isEmpty()){
 			Integer u = minHeap.poll();
+			mst.add(u);
 			for (Integer v : g.adyacentes(u)){
-				if(v.equals(u)){
-					//Salteamos la arista incidente sobre el mismo vertice.
+				if(mst.contains(v)){
 					continue;
 				}
 				Integer distUV = g.arista(u, v).getWeight();
-				if(minHeap.contains(v) && (distUV < distanceToMST.get(v))){
+				if(distUV < distanceToMST.get(v)){
 					if(parents.get(v) != null){
 						childs.get(parents.get(v)).remove(v);
 					}
