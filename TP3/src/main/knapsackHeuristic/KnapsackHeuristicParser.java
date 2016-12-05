@@ -52,11 +52,19 @@ public class KnapsackHeuristicParser {
 			List<Item> items = new ArrayList<>(N);
 			BitSet selected = new BitSet(N);
 			
+			Integer maxV = 0;
+		
 			for(int i = 0; i < N; i++) {
 				String[] values = file.readLine().split(",");
 				
 				//items.add(new Item(Integer.parseInt(values[1]), (int) Math.ceil(Double.parseDouble(values[2]) /epsilon)));
-				items.add(new Item(Integer.parseInt(values[1]), Integer.parseInt((values[2]))));
+				Integer profit = Integer.parseInt(values[1]);
+				items.add(new Item(profit, Integer.parseInt((values[2]))));
+				
+				if (profit > maxV) {
+					maxV = profit;
+				}
+				
 				if(values[3].equals("1")) {
 					selected.set(i);
 				}
@@ -65,7 +73,7 @@ public class KnapsackHeuristicParser {
 			
 			//Agrego porque es el testCase o porque quiero a todos los testcases
 			if (currentTestCase.equals(testCase) || testCase.equals(ALLTESTCASES)) {
-				knapsacks.add(new KnapsackHeuristic(items, cInt));
+				knapsacks.add(new KnapsackHeuristic(items, cInt,epsilon,maxV));
 				solutions.add(new KnapsackSolution(selected, Integer.parseInt(z[1]), time[1]));
 				
 				if (currentTestCase.equals(testCase)) {
